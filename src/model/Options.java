@@ -15,7 +15,7 @@ public int id;
 @JoinColumn(name="pid")
 public Problem problem;
 public String value;
-public boolean edit;//该选项是否可以编辑，true为可以
+public boolean edit;//该选项是否可以编辑，0为可以
 public int getId() {
 	return id;
 }
@@ -34,11 +34,18 @@ public String getValue() {
 public void setValue(String value) {
 	this.value = value;
 }
+//public boolean isEdit() {
+//	return edit;
+//}
+//public void setEdit(boolean edit) {
+//	this.edit = edit;
+//}
 public boolean isEdit() {
 	return edit;
 }
 public void setEdit(boolean edit) {
 	this.edit = edit;
 }
+
 
 }

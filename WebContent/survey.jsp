@@ -41,12 +41,30 @@
 <input type="radio" name="rds" value="#option.value"><s:property value="#option.value"/></input>
 
 </s:iterator>
-
+<br>
 <%--  <s:radio list="#item.options"  listValue="value" listKey="value" value="value"></s:radio> --%> 
+ </s:if> 
+ 
+ <s:if test="#item.problem.type==2"> 
+<s:iterator value="#item.options" var="option">
+<%-- <s:hidden name="ids" value="id"/> --%>
+<input type="checkbox" name="rds" value="#option.value">
+<s:property value="#option.value"/></input>
+<s:if test="#option.edit==1">
+<input type="text" name="rds" value=""></input>
+</s:if>
+</s:iterator>
+ </s:if> 
+ 
+  <s:if test="#item.problem.type==3"> 
+<s:iterator value="#item.options" var="option">
+<%-- <s:hidden name="ids" value="id"/> --%>
+<s:property value="#option.value"/><input type="text" name="rds" value=""></input>
 
+</s:iterator>
  </s:if> 
 </s:iterator>
-<br>
+<br> 
 </s:iterator>
 
 
