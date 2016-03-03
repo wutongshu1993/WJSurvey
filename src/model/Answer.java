@@ -8,6 +8,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Answer {
 @Id
+public int id;
 @OneToOne
 @JoinColumn(name="wjid")
 public Survey survey;
@@ -17,6 +18,12 @@ public Problem problem;
 public String answer;
 public String remark;
 
+public int getId() {
+	return id;
+}
+public void setId(int id) {
+	this.id = id;
+}
 public Survey getSurvey() {
 	return survey;
 }

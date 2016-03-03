@@ -14,9 +14,7 @@ public int id;
 public int pid;
 public String title;
 public int type;//题目类型（单选多选，0为单选，1为多选）
-@OneToMany
-@JoinColumn(name="ltId")
-public LittleProblem littleProblem;
+
 public int getId() {
 	return id;
 }
@@ -24,12 +22,7 @@ public void setId(int id) {
 	this.id = id;
 }
 
-public LittleProblem getLittleProblem() {
-	return littleProblem;
-}
-public void setLittleProblem(LittleProblem littleProblem) {
-	this.littleProblem = littleProblem;
-}
+
 public int getPid() {
 	return pid;
 }
@@ -41,6 +34,12 @@ public String getTitle() {
 }
 public void setTitle(String title) {
 	this.title = title;
+}
+public int getType() {
+	return type;
+}
+public void setType(int type) {
+	this.type = type;
 }
 
 

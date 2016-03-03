@@ -29,9 +29,10 @@
 <!--         <mapping resource="model/UserModel.hbm.xml"/> -->
 		<mapping class="model.Survey"/>
 		<mapping class="model.Teacher"/>
-		 <mapping class="model.User"/>
+		<mapping class="model.User"/>
 		<mapping class="model.Problem"/>
 		<mapping class="model.Options"/>
+		<mapping class="model.Answer"/>
 		
 	
 		

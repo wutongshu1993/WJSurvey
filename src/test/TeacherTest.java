@@ -13,10 +13,15 @@ public class TeacherTest {
 		t.setName("t1");
 		t.setTitle("middle");
 		
-		SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
-		Session session = sessionFactory.getCurrentSession();
+		Session session = model.Util.sessionFactory.openSession();
+		
+//		SessionFactory sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
+//		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
 		session.save(t);
 		session.getTransaction().commit();
+		session.close();
+		
+		
 	}
 }
