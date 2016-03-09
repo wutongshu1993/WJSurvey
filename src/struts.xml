@@ -12,12 +12,16 @@
     <constant name="struts.aciton.excludePattern" value="ws://*"></constant>
      <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
 	
-<package name="default" namespace="/" extends="struts-default">
+
+     <package name="default" namespace="/" extends="json-default,struts-default">
        
-        <action name="survey" class="action.SurveyAction">
+        <action name="survey" class="action.SurveyAction" method="execute">
             <result >/survey.jsp</result>
         </action>
-    </package>
+        <action name="survey_*" class="action.SurveyAction" method="{1}">
+			<result type="json"></result>
+		</action>
+    </package> 
     <!-- Add packages here -->
 
 </struts>

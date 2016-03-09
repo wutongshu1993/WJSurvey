@@ -1,3 +1,4 @@
+<%@page import="java.security.cert.PKIXRevocationChecker.Option"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
     <%@ taglib prefix="s" uri="/struts-tags"%>
@@ -13,6 +14,7 @@
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
     <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="./css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
 <div class="container theme-showcase" role="main">
@@ -35,10 +37,13 @@
 <s:property value="#bulk.pid"/>
 <s:iterator value="#bulk.items" var="item">
 <s:property value="#item.problem.title"/><br>
+
 <s:if test="#item.problem.type==1"> 
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="radio" name="rds" value="#option.value"><s:property value="#option.value"/></input>
+<input type="radio" name="rds" value="<s:property value="#option.value"/>" class="radioOption" 
+optionId=<s:property value="#option.id"/>>
+<s:property value="#option.value"/></input>
 
 </s:iterator>
 <br>
@@ -48,10 +53,12 @@
  <s:if test="#item.problem.type==2"> 
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="checkbox" name="rds" value="#option.value">
+<input type="checkbox" name="cks" value="<s:property value="#option.value"/>" class="checkOption" 
+optionId=<s:property value="#option.id"/>>
 <s:property value="#option.value"/></input>
+
 <s:if test="#option.edit==1">
-<input type="text" name="rds" value=""></input>
+<input type="text" name="cks" value=""></input>
 </s:if>
 </s:iterator>
  </s:if> 
@@ -68,35 +75,104 @@
 </s:iterator>
 
 
-<%-- <s:iterator value="items" var="item" status="i">
-<s:property value="#item.problem.title"/>
-<br/>
-<s:if test="#item.problem.type==1"> 
-<s:property value="#item.options"/>
-<s:iterator value="#item.options" var="option">
-<s:hidden name="ids" value="id"/>
-<!-- <input type="radio" name="rds" value="1">1</input> -->
-<input type="radio" name="rds" value="#option.value"><s:property value="#option.value"/></input>
-
-</s:iterator>
- <s:radio list="#item.options"  listValue="value" listKey="value" value="value"></s:radio> 
-
- </s:if> 
 
 
-</s:iterator> --%>
-<s:radio name="a" label="请选择您喜欢的图书" labelposition="top"
-	list="{'疯狂Java讲义','轻量级Java EE企业应用实战',
-		'经典Java EE企业应用实战'}"/>
 </form>
 
 </div>
-<button type="button" class="btn btn-lg btn-primary">Primary</button>
+<button type="button" class="btn btn-lg btn-primary" id="surveySubmit">提交问卷</button>
 <s:debug></s:debug>
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./jquery/jquery.min.js"></script>
     <script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).on("click",".checkOption", function(){
+	//var val =$('input:checkbox[name="cks"]:checked').val();
+	//alert(111);
+	//var checked =$(".checkOption").is(':checked');
+	//var checked =$('input:checkbox[name="cks"]:checked').val();
+	/* var val =$(this).find("input[type=checkbox]:checked").val() ;
+	alert(val); */
+	var val = $('input:checkbox[name="cks"]:checked').val();
+	alert(val);
+	if(val!= undefined){
+		alert($(this).find("input[type=checkbox]:checked").val());
+	}
+		var opId = $(this).attr("optionId");//获取选项的编号
+		//alert(opId);
+		params = {
+				"checked":checked,
+				/* "newNum": Number($("#exCont").attr("newNum")),
+				"titleId":Number( $(this).parents("[titleId]").attr("titleId")), */
+				"optionId":opId
+		}
+		 //alert(checked); 
+		
+		 /*  $.ajax({
+			url : 'survey_checkChangeForC',
+			type : 'post',
+			dataType : 'json',
+			data : params,
+			traditional : true,
+			success : checkChangeCallback
+		});   */
+})
+$(document).on("click",".radioOption", function(){
+//	var checked = $(this).parent().children("input").eq(0).checked;
+
+var val = $('input:radio[name="rds"]:checked').val();
+alert(val);
+var checked;
+if(val==null){
+	checked=false;
+}
+else checked=true;
+	//alert(checked);
+	
+	var opId = $(this).attr("optionId");//获取选项的编号
+	alert(opId);
+	params = {
+			"checked":checked,
+			/* "newNum": Number($("#exCont").attr("newNum")),
+			"titleId":Number( $(this).parents("[titleId]").attr("titleId")), */
+			"optionId":opId
+	}
+	 //alert(checked); 
+	
+	 /* $.ajax({
+		url : 'survey_checkChangeForR',
+		type : 'post',
+		dataType : 'json',
+		data : params,
+		traditional : true,
+		success : checkChangeCallback
+	});  */
+})
+function checkChangeCallback(data)
+		{
+			alert(data.status);
+		}
+$(document).on("click","#surveySubmit", function(){
+			var params = {
+						
+			}
+			$.ajax({
+				url : 'survey_submit',
+				type : 'post',
+				dataType : 'json',
+				data : params,
+				traditional : true,
+				success : submitCallback
+			});
+		})
+		function submitCallback(data)
+		{
+			/* alert("您答对了：" + data.score + "个题目" + "\n" + data.status);
+			window.location.reload(); */
+			alert("提交成功，感谢您的配合");
+		}
+</script>
 </body>
 </html>

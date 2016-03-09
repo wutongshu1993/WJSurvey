@@ -10,8 +10,8 @@ import javax.persistence.OneToMany;
 public class Problem {
 @Id
 @GeneratedValue
-public int id;
-public int pid;
+public int id;//小问题编号
+public int pid;//大问题编号
 public String title;
 public int type;//题目类型（单选多选，0为单选，1为多选）
 

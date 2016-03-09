@@ -9,21 +9,22 @@ import javax.persistence.Id;
 
 @Entity
 public class Survey {
-
-public int id;
+@Id
+public String id;
 
 public String time;
-@Id
-@GeneratedValue
-public int getId() {
-	return id;
-}
-public void setId(int id) {
-	this.id = id;
-}
+
+
+
 @Column(length = 100)
 public String getTime() {
 	return time;
+}
+public String getId() {
+	return id;
+}
+public void setId(String id) {
+	this.id = id;
 }
 public void setTime(String time) {
 	this.time = time;

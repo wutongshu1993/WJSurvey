@@ -1,21 +1,27 @@
 package model;
 
+import javax.annotation.Generated;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Answer {
 @Id
+@GeneratedValue
 public int id;
-@OneToOne
+@ManyToOne
 @JoinColumn(name="wjid")
 public Survey survey;
 @OneToOne
 @JoinColumn(name="pid")
 public Problem problem;
-public String answer;
+@OneToOne
+@JoinColumn(name="answer")
+public Options options;
 public String remark;
 
 public int getId() {
@@ -37,11 +43,12 @@ public Problem getProblem() {
 public void setProblem(Problem problem) {
 	this.problem = problem;
 }
-public String getAnswer() {
-	return answer;
+
+public Options getOptions() {
+	return options;
 }
-public void setAnswer(String answer) {
-	this.answer = answer;
+public void setOptions(Options options) {
+	this.options = options;
 }
 public String getRemark() {
 	return remark;
