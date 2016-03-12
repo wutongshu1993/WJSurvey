@@ -73,22 +73,22 @@
 </div>
 <s:iterator value="bulks" var="bulk">
 <s:if test="#bulk.pid==1 ">
-一.基本情况
+<b>一.基本情况</b>
 </s:if>
 <s:if test="#bulk.pid==13 ">
-二.芦山地震相关情况
+<b>二.芦山地震相关情况</b>
 </s:if>
 <s:if test="#bulk.pid==20 ">
-三.芦山地震受伤情况
+<b>三.芦山地震受伤情况</b>
 </s:if>
 <s:if test="#bulk.pid==30 ">
-四.芦山地震受灾情况
+<b>四.芦山地震受灾情况</b>
 </s:if>
 <s:if test="#bulk.pid==44">
-五.地震救援组织情况
+<b>五.地震救援组织情况</b>
 </s:if>
 <s:if test="#bulk.pid==56 ">
-六.抗震救灾认知调查
+<b>六.抗震救灾认知调查</b>
 </s:if>
 <br>
 <s:property value="#bulk.pid"/>
@@ -138,6 +138,12 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
 <br>
 <%-- </s:iterator> --%>
  </s:if> 
+ 
+ <s:if test="#item.problem.type==4"> 
+<textarea type="" name="edit" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></textarea>
+&nbsp&nbsp
+<br>
+ </s:if> 
 </s:iterator>
 <s:if test="#bulk.pid==20"> 
 如果您地震中受伤，请回答 21-29题；如果您未受伤，请代替您家中受伤最严
@@ -158,10 +164,10 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
 
 
 </form>
-
-</div>
 <button type="button" class="btn btn-lg btn-primary" id="surveySubmit">提交问卷</button>
-<s:debug></s:debug>
+</div>
+
+<%-- <s:debug></s:debug> --%>
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -170,9 +176,9 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
 <script type="text/javascript">
 $(document).on("blur",".remarkForR", function(){
 var remark = $(this).val();
-alert(remark);
+//alert(remark);
 		var opId = $(this).attr("optionId");//获取选项的编号
-		alert(opId);
+		//alert(opId);
 		params = {
 				"remark":remark,
 				"optionId":opId
@@ -191,9 +197,9 @@ alert(remark);
 
 $(document).on("blur",".remarkForC", function(){
 var remark = $(this).val();
-alert(remark);
+//alert(remark);
 		var opId = $(this).attr("optionId");//获取选项的编号
-		alert(opId);
+		//alert(opId);
 		params = {
 				"remark":remark,
 				"optionId":opId
@@ -211,9 +217,9 @@ alert(remark);
 	})
 $(document).on("blur",".remarkForE", function(){
 var remark = $(this).val();
-alert(remark);
+//alert(remark);
 		var opId = $(this).attr("optionId");//获取选项的编号
-		alert(opId);
+		//alert(opId);
 		params = {
 				"remark":remark,
 				"optionId":opId
@@ -232,9 +238,9 @@ alert(remark);
 $(document).on("click",".checkOption", function(){
 
 var checked = $(this).is(':checked');
-	alert(checked);
+	//alert(checked);
 	var opId = $(this).attr("optionId");//获取选项的编号
-	alert(opId);
+	//alert(opId);
 	params = {
 			"checked":checked,
 			"optionId":opId
@@ -265,9 +271,9 @@ if(val==null){
 else checked=true;
 */
 var checked = $(this).is(':checked');
-	alert(checked);
+	//alert(checked);
 	var opId = $(this).attr("optionId");//获取选项的编号
-	alert(opId);
+	//alert(opId);
 	params = {
 			"checked":checked,
 			/* "newNum": Number($("#exCont").attr("newNum")),
@@ -289,7 +295,7 @@ var checked = $(this).is(':checked');
 
 function checkChangeCallback(data)
 		{
-			alert(data.status);
+			/* alert(data.status); */
 		}
 $(document).on("click","#surveySubmit", function(){
 	var name= $("#name").val();	
@@ -300,7 +306,7 @@ $(document).on("click","#surveySubmit", function(){
 	var cun= $("#cun").val();	
 	var zuD= $("#zuD").val();	
 	var hao= $("#hao").val();	
-	alert(name+hTel+tel+quX+xiangJ+cun+zuD+hao);
+	//alert(name+hTel+tel+quX+xiangJ+cun+zuD+hao);
 	
 	var params = {
 				"name":name,
