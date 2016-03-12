@@ -31,7 +31,7 @@
 以保密。希望您能够如实、客观、完整地回答以下的所有问题，再次
 感谢您的合作！
 </p>
-<p>一. 基本情况</p>
+
 <form action="" class="form-inline">
 <div class="row">
 
@@ -72,10 +72,33 @@
 </div>
 </div>
 <s:iterator value="bulks" var="bulk">
+<s:if test="#bulk.pid==1 ">
+一.基本情况
+</s:if>
+<s:if test="#bulk.pid==4 ">
+二.芦山地震相关情况
+</s:if>
+<s:if test="#bulk.pid==5 ">
+三.芦山地震受伤情况
+</s:if>
+<s:if test="#bulk.pid==7 ">
+四.芦山地震受灾情况
+</s:if>
+<s:if test="#bulk.pid==9">
+五.地震救援组织情况
+</s:if>
+<s:if test="#bulk.pid==10 ">
+六.抗震救灾认知调查
+</s:if>
+<br>
 <s:property value="#bulk.pid"/>
 <s:iterator value="#bulk.items" var="item">
-<s:property value="#item.problem.title"/><br>
-
+<s:property value="#item.problem.title"/>
+<s:if test="#item.problem.img!=null">
+<br>
+<img alt="" src="<s:property value="#item.problem.img"/>">
+</s:if>
+<br>
 <s:if test="#item.problem.type==1"> 
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
@@ -114,6 +137,8 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
  </s:if> 
 </s:iterator>
 <br> 
+
+
 </s:iterator>
 
 
