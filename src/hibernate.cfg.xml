@@ -33,6 +33,7 @@
 		<mapping class="model.Problem"/>
 		<mapping class="model.Options"/>
 		<mapping class="model.Answer"/>
+		<mapping class="model.Address"/>
 		
 	
 		

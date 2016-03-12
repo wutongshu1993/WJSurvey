@@ -32,7 +32,45 @@
 感谢您的合作！
 </p>
 <p>一. 基本情况</p>
-<form action="">
+<form action="" class="form-inline">
+<div class="row">
+
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+姓名：
+<input type="text" class="form-control" name="name" id="name" style="width:60%"/>
+</div>
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+家庭电话：<input type="text" class="form-control" name="homeTel" id="homeTel" style="width:60%"/>
+</div>
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+手机：<input type="text" class="form-control" name="tel" id="tel" style="width:60%"/>
+</div>
+</div>
+<br>
+<div class="row" align="left">
+
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+家庭住址：
+<input type="text" class="form-control" name="quX" id="quX" style="width:60%"/>
+区县
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
+<input type="text" class="form-control" name="xiangJ"  id="xiangJ"style="width:60%"/>
+乡(街道)
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
+<input type="text" class="form-control" name="cun" id="cun"  style="width:60%"/>
+村
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
+<input type="text" class="form-control" name="zuD" id="zuD" style="width:60%"/>
+组（队）
+</div>
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
+<input type="text" class="form-control" name="hao" id="hao" style="width:60%"/>
+号
+</div>
+</div>
 <s:iterator value="bulks" var="bulk">
 <s:property value="#bulk.pid"/>
 <s:iterator value="#bulk.items" var="item">
@@ -44,7 +82,9 @@
 <input type="radio" name="rds" value="<s:property value="#option.value"/>" class="radioOption" 
 optionId=<s:property value="#option.id"/>>
 <s:property value="#option.value"/></input>
-
+<s:if test="#option.edit==1">
+<input type="text" name="radioRem" value="" optionId=<s:property value="#option.id"/>  class="remarkForR"></input>
+</s:if>
 </s:iterator>
 <br>
 <%--  <s:radio list="#item.options"  listValue="value" listKey="value" value="value"></s:radio> --%> 
@@ -54,19 +94,21 @@ optionId=<s:property value="#option.id"/>>
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
 <input type="checkbox" name="cks" value="<s:property value="#option.value"/>" class="checkOption" 
-optionId=<s:property value="#option.id"/>>
+optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/>>
 <s:property value="#option.value"/></input>
 
 <s:if test="#option.edit==1">
-<input type="text" name="cks" value=""></input>
+<input type="text" name="checkRem" value="" optionId=<s:property value="#option.id"/>  class="remarkForC"></input>
 </s:if>
 </s:iterator>
+<br>
  </s:if> 
  
   <s:if test="#item.problem.type==3"> 
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<s:property value="#option.value"/><input type="text" name="rds" value=""></input>
+<s:property value="#option.value"/>
+<input type="text" name="edit" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></input>
 
 </s:iterator>
  </s:if> 
@@ -88,49 +130,104 @@ optionId=<s:property value="#option.id"/>>
     <script src="./jquery/jquery.min.js"></script>
     <script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
 <script type="text/javascript">
-$(document).on("click",".checkOption", function(){
-	//var val =$('input:checkbox[name="cks"]:checked').val();
-	//alert(111);
-	//var checked =$(".checkOption").is(':checked');
-	//var checked =$('input:checkbox[name="cks"]:checked').val();
-	/* var val =$(this).find("input[type=checkbox]:checked").val() ;
-	alert(val); */
-	var val = $('input:checkbox[name="cks"]:checked').val();
-	alert(val);
-	if(val!= undefined){
-		alert($(this).find("input[type=checkbox]:checked").val());
-	}
+$(document).on("blur",".remarkForR", function(){
+var remark = $(this).val();
+alert(remark);
 		var opId = $(this).attr("optionId");//获取选项的编号
-		//alert(opId);
+		alert(opId);
 		params = {
-				"checked":checked,
-				/* "newNum": Number($("#exCont").attr("newNum")),
-				"titleId":Number( $(this).parents("[titleId]").attr("titleId")), */
+				"remark":remark,
 				"optionId":opId
 		}
 		 //alert(checked); 
 		
-		 /*  $.ajax({
-			url : 'survey_checkChangeForC',
+		 $.ajax({
+			url : 'survey_saveRemarkForR',
 			type : 'post',
 			dataType : 'json',
 			data : params,
 			traditional : true,
 			success : checkChangeCallback
-		});   */
+		});  
+	})
+
+$(document).on("blur",".remarkForC", function(){
+var remark = $(this).val();
+alert(remark);
+		var opId = $(this).attr("optionId");//获取选项的编号
+		alert(opId);
+		params = {
+				"remark":remark,
+				"optionId":opId
+		}
+		 //alert(checked); 
+		
+		 $.ajax({
+			url : 'survey_saveRemarkForC',
+			type : 'post',
+			dataType : 'json',
+			data : params,
+			traditional : true,
+			success : checkChangeCallback
+		});  
+	})
+$(document).on("blur",".remarkForE", function(){
+var remark = $(this).val();
+alert(remark);
+		var opId = $(this).attr("optionId");//获取选项的编号
+		alert(opId);
+		params = {
+				"remark":remark,
+				"optionId":opId
+		}
+		 //alert(checked); 
+		
+		 $.ajax({
+			url : 'survey_saveRemarkForR',
+			type : 'post',
+			dataType : 'json',
+			data : params,
+			traditional : true,
+			success : checkChangeCallback
+		});  
+	})
+$(document).on("click",".checkOption", function(){
+
+var checked = $(this).is(':checked');
+	alert(checked);
+	var opId = $(this).attr("optionId");//获取选项的编号
+	alert(opId);
+	params = {
+			"checked":checked,
+			"optionId":opId
+	}
+	 //alert(checked); 
+	
+	 $.ajax({
+		url : 'survey_checkChangeForC',
+		type : 'post',
+		dataType : 'json',
+		data : params,
+		traditional : true,
+		success : checkChangeCallback
+	});   
 })
+
+
 $(document).on("click",".radioOption", function(){
 //	var checked = $(this).parent().children("input").eq(0).checked;
 
-var val = $('input:radio[name="rds"]:checked').val();
+/* var val = $('input:radio[name="rds"]:checked').val(); //获取选项值
+
 alert(val);
 var checked;
 if(val==null){
 	checked=false;
 }
 else checked=true;
-	//alert(checked);
-	
+*/
+var checked = $(this).is(':checked');
+	alert(checked);
 	var opId = $(this).attr("optionId");//获取选项的编号
 	alert(opId);
 	params = {
@@ -141,22 +238,41 @@ else checked=true;
 	}
 	 //alert(checked); 
 	
-	 /* $.ajax({
+	 $.ajax({
 		url : 'survey_checkChangeForR',
 		type : 'post',
 		dataType : 'json',
 		data : params,
 		traditional : true,
 		success : checkChangeCallback
-	});  */
+	});  
 })
+
+
 function checkChangeCallback(data)
 		{
 			alert(data.status);
 		}
 $(document).on("click","#surveySubmit", function(){
-			var params = {
-						
+	var name= $("#name").val();	
+	var hTel= $("#homeTel").val();	
+	var tel= $("#tel").val();	
+	var quX= $("#quX").val();	
+	var xiangJ= $("#xiangJ").val();	
+	var cun= $("#cun").val();	
+	var zuD= $("#zuD").val();	
+	var hao= $("#hao").val();	
+	alert(name+hTel+tel+quX+xiangJ+cun+zuD+hao);
+	
+	var params = {
+				"name":name,
+				"hTel":hTel,
+				"tel":tel,
+				"quX":quX,
+				"xiangJ":xiangJ,
+				"cun":cun,
+				"zuD":zuD,
+				"hao":hao
 			}
 			$.ajax({
 				url : 'survey_submit',

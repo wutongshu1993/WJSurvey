@@ -14,7 +14,9 @@ public int id;
 public String name;
 public String hTel;
 public String tel;
-public String address;
+@OneToOne
+@JoinColumn(name="addressId")
+public Address address;
 @OneToOne
 @JoinColumn(name="testId")
 public Survey survey;
@@ -42,10 +44,11 @@ public String getTel() {
 public void setTel(String tel) {
 	this.tel = tel;
 }
-public String getAddress() {
+
+public Address getAddress() {
 	return address;
 }
-public void setAddress(String address) {
+public void setAddress(Address address) {
 	this.address = address;
 }
 public Survey getSurvey() {
