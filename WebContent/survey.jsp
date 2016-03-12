@@ -75,19 +75,19 @@
 <s:if test="#bulk.pid==1 ">
 一.基本情况
 </s:if>
-<s:if test="#bulk.pid==4 ">
+<s:if test="#bulk.pid==13 ">
 二.芦山地震相关情况
 </s:if>
-<s:if test="#bulk.pid==5 ">
+<s:if test="#bulk.pid==20 ">
 三.芦山地震受伤情况
 </s:if>
-<s:if test="#bulk.pid==7 ">
+<s:if test="#bulk.pid==30 ">
 四.芦山地震受灾情况
 </s:if>
-<s:if test="#bulk.pid==9">
+<s:if test="#bulk.pid==44">
 五.地震救援组织情况
 </s:if>
-<s:if test="#bulk.pid==10 ">
+<s:if test="#bulk.pid==56 ">
 六.抗震救灾认知调查
 </s:if>
 <br>
@@ -108,6 +108,7 @@ optionId=<s:property value="#option.id"/>>
 <s:if test="#option.edit==1">
 <input type="text" name="radioRem" value="" optionId=<s:property value="#option.id"/>  class="remarkForR"></input>
 </s:if>
+&nbsp&nbsp
 </s:iterator>
 <br>
 <%--  <s:radio list="#item.options"  listValue="value" listKey="value" value="value"></s:radio> --%> 
@@ -123,19 +124,31 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
 <s:if test="#option.edit==1">
 <input type="text" name="checkRem" value="" optionId=<s:property value="#option.id"/>  class="remarkForC"></input>
 </s:if>
+&nbsp&nbsp&nbsp
 </s:iterator>
 <br>
  </s:if> 
  
   <s:if test="#item.problem.type==3"> 
-<s:iterator value="#item.options" var="option">
-<%-- <s:hidden name="ids" value="id"/> --%>
-<s:property value="#option.value"/>
+<%-- <s:iterator value="#item.options" var="option">
+<s:hidden name="ids" value="id"/>
+<s:property value="#option.value"/> --%>
 <input type="text" name="edit" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></input>
-
-</s:iterator>
+&nbsp&nbsp
+<br>
+<%-- </s:iterator> --%>
  </s:if> 
 </s:iterator>
+<s:if test="#bulk.pid==20"> 
+如果您地震中受伤，请回答 21-29题；如果您未受伤，请代替您家中受伤最严
+重伤者回答21-29题；如果家中无人受伤，请直接跳至  30题
+
+</s:if>
+<s:if test="#bulk.pid==75"> 
+对于以下问题，请根据您的状况选择适合的选项，“1”代表非常不符合您的想法，“6”代
+表非常符合，以此类推。
+
+</s:if>
 <br> 
 
 
