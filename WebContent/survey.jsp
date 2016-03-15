@@ -17,7 +17,12 @@
     <link href="./css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
+
+
 <div class="container theme-showcase" role="main">
+<div align="right">
+<a href="./login.jsp" >问卷统计</a>
+</div>
 <div class="jumbotron">
 <h2 align="center">调查问卷</h2>
 <br>

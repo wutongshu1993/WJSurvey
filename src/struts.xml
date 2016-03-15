@@ -5,23 +5,34 @@
 
 <struts>
 
-    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="true" />
-      
-    <constant name="struts.multipart.maxSize" value="100000000" />
-    <constant name="struts.aciton.excludePattern" value="ws://*"></constant>
-     <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
-	
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true" />
 
-     <package name="default" namespace="/" extends="json-default,struts-default">
-       
-        <action name="survey" class="action.SurveyAction" method="execute">
-            <result >/survey.jsp</result>
-        </action>
-        <action name="survey_*" class="action.SurveyAction" method="{1}">
+	<constant name="struts.multipart.maxSize" value="100000000" />
+	<constant name="struts.aciton.excludePattern" value="ws://*"></constant>
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+
+
+	<package name="default" namespace="/" extends="json-default,struts-default">
+
+		<action name="survey" class="action.SurveyAction" method="execute">
+			<result>/survey.jsp</result>
+		</action>
+		<action name="survey_*" class="action.SurveyAction" method="{1}">
 			<result type="json"></result>
 		</action>
-    </package> 
-    <!-- Add packages here -->
+
+		<action name="login" class="action.ResultAction" method="login" >
+			<result name="success" type="redirect">/result</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		<action name="result" class="action.ResultAction" method="result">
+		<result>/result.jsp</result>
+		</action>
+		<action name="result_detail" class="action.ResultAction" method="detail">
+		<result>/detail.jsp</result>
+		</action>
+	</package>
+	<!-- Add packages here -->
 
 </struts>
