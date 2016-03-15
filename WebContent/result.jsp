@@ -43,7 +43,10 @@
 								value="#user.address.hao" />号</td>
 						<td><a
 							href="result_detail?surveyId=<s:property value="#user.survey.id"/>"
-							class="btn btn-info">问卷详情</a></td>
+							class="btn btn-info">问卷详情</a>
+							
+							</td>
+							
 					</tr>
 				</tbody>
 			</s:iterator>

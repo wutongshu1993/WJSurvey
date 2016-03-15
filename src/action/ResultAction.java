@@ -2,10 +2,13 @@ package action;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import model.Answer;
 import model.Detail;
@@ -27,6 +30,8 @@ public String excute() {
 public String login() {
 	System.out.println(username+password);
 	if (username.equals("admin") && password.equals("123456")) {
+		Map session = ActionContext.getContext().getSession();
+		session.put("user", username);
 		return "success";
 	}
 	return "error";

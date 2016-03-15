@@ -14,7 +14,14 @@
 
 
 	<package name="default" namespace="/" extends="json-default,struts-default">
-
+		<interceptors>
+		<interceptor name="loginInterceptor" class="action.LoginInterceptor"></interceptor>
+			<!-- <interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor">
+					<param name="includeMethods">result,result_detail</param>
+				</interceptor-ref>
+			</interceptor-stack> -->
+		</interceptors>
 		<action name="survey" class="action.SurveyAction" method="execute">
 			<result>/survey.jsp</result>
 		</action>
@@ -22,16 +29,27 @@
 			<result type="json"></result>
 		</action>
 
-		<action name="login" class="action.ResultAction" method="login" >
+		<action name="login" class="action.ResultAction" method="login">
 			<result name="success" type="redirect">/result</result>
 			<result name="error">/error.jsp</result>
 		</action>
+		<action name="not_login">
+			<result> /not_login.jsp </result>
+		</action>
 		<action name="result" class="action.ResultAction" method="result">
-		<result>/result.jsp</result>
+			<result name="success">/result.jsp</result>
+			<result name="not_login">/login.jsp</result>
+			<interceptor-ref name="loginInterceptor"></interceptor-ref>
 		</action>
-		<action name="result_detail" class="action.ResultAction" method="detail">
-		<result>/detail.jsp</result>
+		<action name="result_detail" class="action.ResultAction"
+			method="detail">
+			<result name="success">/detail.jsp</result>
+			<result name="not_login">/login.jsp</result>
+			 <interceptor-ref name="defaultStack" /> 
+			<interceptor-ref name="loginInterceptor"></interceptor-ref> 
 		</action>
+		
+		
 	</package>
 	<!-- Add packages here -->
 

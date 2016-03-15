@@ -4,11 +4,10 @@
 <html>
 <head>
 <meta charset="utf-8">
- <meta http-equiv="refresh" content="3;url=login.jsp"> 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>登录失败</title>
+<title>未登录</title>
  <!-- Bootstrap core CSS -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
@@ -16,7 +15,6 @@
 </head>
 <body>
 <div class="container theme-showcase" role="main">
-<h1>登陆失败，即将跳入登陆页面...</h1>
 <!-- <div class="row">
 	<div class="col-md-offset-3">
 		<h1>登录失败, 请重新登录 </h1>
@@ -30,9 +28,9 @@
 	<div class="col-md-offset-4">
 		<a class="btn btn-success btn-lg" href="./login.jsp">继续登录</a>
 	</div> -->
-<!-- <table width="300" border="1" bordercolor="#99CCFF"
+<table width="300" border="1" bordercolor="#99CCFF"
 		style="border-collapse:collapse" cellpadding="0" cellspacing="0">
-		DWLayoutTable
+		<!--DWLayoutTable-->
 		<tr bgcolor="#99CCFF">
 			<td height="13">&nbsp;</td>
 		</tr>
@@ -44,19 +42,15 @@
 					</script>
 			</td>
 		</tr>
-	</table> -->
-	
+	</table>
 </div>
 </div>
-
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./jquery/jquery.min.js"></script>
     <script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
-    
-    
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
 
 	var secs = 2;//倒计时5s
 	var URL;
@@ -73,6 +67,6 @@
 		}
 	}
 
-</script> -->
+</script>
 </body>
 </html>
