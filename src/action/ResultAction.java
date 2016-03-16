@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -23,6 +27,9 @@ public List<User> users;
 public String surveyId;
 public String time;
 public List<Detail> details = new ArrayList<>();
+public int currentPage;
+public int totalPage;
+public int pageSize;
 public String excute() {
 	return "success";
 }
@@ -41,6 +48,33 @@ public String result(){
 	session.beginTransaction();
 	Criteria c = session.createCriteria(User.class);
 	users = c.list();
+	return "success";
+}
+
+public String result_list() {
+	ActionContext ctx = ActionContext.getContext();       
+	HttpServletRequest request = (HttpServletRequest)ctx.get(ServletActionContext.HTTP_REQUEST);   
+	String current = request.getParameter("currentPage");
+	if (current!=null) {
+		currentPage = Integer.parseInt(current);
+	}
+	pageSize = 20;//20
+	Session session = model.Util.openSession();
+	session.beginTransaction();
+	Query q =session.createQuery("from User u order by u.survey.time desc");
+	totalPage = q.list().size()/pageSize;//×ÜÒ³Êý
+	if (totalPage<1) {
+		totalPage=1;
+	}
+	if(currentPage>totalPage){
+		currentPage = totalPage;
+	}
+	if (currentPage<1) {
+		currentPage = 1;
+	}
+	q.setMaxResults(pageSize);//20
+	q.setFirstResult((currentPage-1)*pageSize);//(currentPage-1)*pageSize
+	users = q.list();
 	return "success";
 }
 /**
@@ -102,6 +136,24 @@ public List<Detail> getDetails() {
 }
 public void setDetails(List<Detail> details) {
 	this.details = details;
+}
+public int getCurrentPage() {
+	return currentPage;
+}
+public void setCurrentPage(int currentPage) {
+	this.currentPage = currentPage;
+}
+public int getTotalPage() {
+	return totalPage;
+}
+public void setTotalPage(int totalPage) {
+	this.totalPage = totalPage;
+}
+public int getPageSize() {
+	return pageSize;
+}
+public void setPageSize(int pageSize) {
+	this.pageSize = pageSize;
 }
 
 }

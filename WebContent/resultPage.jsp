@@ -12,6 +12,7 @@
 <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap theme -->
 <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+ <link href="./css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
 	<div class="container theme-showcase" >
@@ -51,12 +52,36 @@
 				</tbody>
 			</s:iterator>
 		</table>
+		<div align="right">
+		<form name="mf"
+						action="result_list"
+						method="post">
+						<p class="STYLE1">
+							<span class="STYLE1">[ <s:property value="currentPage"/> /<s:property value="totalPage"/>
+								] 当前页</span> <span class="STYLE1">第 <s:property value="currentPage"/>
+								页</span> <a href="#" onClick="go(1)" class="page" id="first">首 页</a>&nbsp; <a href="#"
+								onClick="go(<s:property value="currentPage"/>-1)"class="page" id="before">上一页</a>&nbsp; <a
+								href="#"  onClick="go(<s:property value="currentPage"/>+2)"  class="page" id="next">下一页</a>&nbsp;
+							<a href="#" onClick="go(<s:property value="totalPage"/>+1)"class="page" id="last">尾 页</a>&nbsp;
+						</p>
+						<input type="hidden" id="currentPage" name="currentPage" value=<s:property value="currentPage"/>>
+					
+					
+					</form>
+					</div>
 	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="./jquery/jquery.min.js"></script>
 	<script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+function go(c){//该函数指定要跳转的页面
+	  
+	document.mf.currentPage.value=c;
+	document.mf.submit();//提交表单
+}
+ 
+</script>
 </body>
 </html>

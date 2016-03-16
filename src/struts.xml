@@ -30,7 +30,7 @@
 		</action>
 
 		<action name="login" class="action.ResultAction" method="login">
-			<result name="success" type="redirect">/result</result>
+			<result name="success" type="redirect">/result_list</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="not_login">
@@ -38,6 +38,11 @@
 		</action>
 		<action name="result" class="action.ResultAction" method="result">
 			<result name="success">/result.jsp</result>
+			<result name="not_login">/login.jsp</result>
+			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+		</action>
+		<action name="result_list" class="action.ResultAction" method="result_list">
+			<result name="success">/resultPage.jsp</result>
 			<result name="not_login">/login.jsp</result>
 			<interceptor-ref name="loginInterceptor"></interceptor-ref>
 		</action>
