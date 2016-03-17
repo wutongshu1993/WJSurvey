@@ -16,7 +16,8 @@
 <body>
 	<div class="container theme-showcase" role="main">
 		<div align="right">
-		问卷完成时间：<s:property value="time"/>
+		问卷完成时间：<s:property value="time"/><br>
+		问卷编号：<s:property value="surveyId"/>
 		</div>
 		<table class=" table table-bordered table-striped ">
 			<thead>
@@ -43,6 +44,7 @@
 				</tbody>
 			</s:iterator>
 		</table>
+		<a href="excel?surveyId=<s:property value="surveyId"/>">导出到excel</a>
 	</div>
 	<!-- Bootstrap core JavaScript
     ================================================== -->

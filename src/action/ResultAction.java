@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Criteria;
@@ -19,6 +20,7 @@ import model.Detail;
 import model.Options;
 import model.Survey;
 import model.User;
+import test.JxlExcelUtils;
 
 public class ResultAction {
 public String username;
@@ -31,6 +33,7 @@ public int currentPage;
 public int totalPage;
 public int pageSize;
 public String excute() {
+	
 	return "success";
 }
 //默认的用户名是admin 密码123456
@@ -98,6 +101,31 @@ public String detail() throws Exception{
 		detail.setAnswer(answer.getOptions().getValue());
 		details.add(detail);
 	}
+	return "success";
+}
+public String excel(){
+	System.out.println(surveyId);
+	Session session = model.Util.sessionFactory.openSession();
+	session.beginTransaction();
+	HttpServletResponse response = ServletActionContext.getResponse();
+	String filename = "excel";
+	String sheetName = "sheet1";
+	Criteria c2 = session.createCriteria(Answer.class).add(Restrictions.eq("survey.id", surveyId));
+	List<Answer> answers = c2.list();
+	for (Answer answer : answers) {
+		Detail detail = new Detail();
+		detail.setTitle(answer.getProblem().title);
+		detail.setRemark(answer.getRemark());
+		detail.setPid(answer.getProblem().pid);
+		detail.setAnswer(answer.getOptions().getValue());
+		details.add(detail);
+	}
+	List<String> columns = new ArrayList<>();
+	columns.add("题号");
+	columns.add("题干");
+	columns.add("答案");
+	columns.add("备注");
+	JxlExcelUtils.exportexcle(response, filename, details, sheetName, columns);
 	return "success";
 }
 public String getUsername() {
