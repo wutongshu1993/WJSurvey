@@ -107,11 +107,11 @@
 <s:if test="#item.problem.type==1"> 
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="radio" name="rds" value="<s:property value="#option.value"/>" class="radioOption" 
+<input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption" 
 optionId=<s:property value="#option.id"/>>
 <s:property value="#option.value"/></input>
 <s:if test="#option.edit==1">
-<input type="text" name="radioRem" value="" optionId=<s:property value="#option.id"/>  class="remarkForR"></input>
+<input type="text" value="" optionId=<s:property value="#option.id"/>  class="remarkForR"></input>
 </s:if>
 &nbsp&nbsp
 </s:iterator>
@@ -122,12 +122,12 @@ optionId=<s:property value="#option.id"/>>
  <s:if test="#item.problem.type==2"> 
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="checkbox" name="cks" value="<s:property value="#option.value"/>" class="checkOption" 
+<input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption" 
 optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/>>
 <s:property value="#option.value"/></input>
 
 <s:if test="#option.edit==1">
-<input type="text" name="checkRem" value="" optionId=<s:property value="#option.id"/>  class="remarkForC"></input>
+<input type="text"  value="" optionId=<s:property value="#option.id"/>  class="remarkForC"></input>
 </s:if>
 &nbsp&nbsp&nbsp
 </s:iterator>
@@ -138,14 +138,14 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
 <%-- <s:iterator value="#item.options" var="option">
 <s:hidden name="ids" value="id"/>
 <s:property value="#option.value"/> --%>
-<input type="text" name="edit" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></input>
+<input type="text"  value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></input>
 &nbsp&nbsp
 <br>
 <%-- </s:iterator> --%>
  </s:if> 
  
  <s:if test="#item.problem.type==4"> 
-<textarea type="" name="edit" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></textarea>
+<textarea type="" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></textarea>
 &nbsp&nbsp
 <br>
  </s:if> 
@@ -287,14 +287,14 @@ var checked = $(this).is(':checked');
 	}
 	 //alert(checked); 
 	
-	 $.ajax({
+	   $.ajax({
 		url : 'survey_checkChangeForR',
 		type : 'post',
 		dataType : 'json',
 		data : params,
 		traditional : true,
 		success : checkChangeCallback
-	});  
+	});   
 })
 
 
