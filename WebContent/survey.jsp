@@ -30,7 +30,7 @@
 </div>
 <p>尊敬的先生/女士：
 您好！感谢您参加我们的调查！此次调查主要通过问卷方式了解
-芦山地震后重灾区灾民受灾状况以及获得医学救援的反应性和可及
+地震后重灾区灾民受灾状况以及获得医学救援的反应性和可及
 性，为国家“防灾、减灾”建设提供重要依据。所调查的内容仅用于
 相关的分析，我们将按照国家《统计法》的要求，对您回答的问题加
 以保密。希望您能够如实、客观、完整地回答以下的所有问题，再次
@@ -81,13 +81,13 @@
 <b>一.基本情况</b>
 </s:if>
 <s:if test="#bulk.pid==13 ">
-<b>二.芦山地震相关情况</b>
+<b>二.地震相关情况</b>
 </s:if>
 <s:if test="#bulk.pid==20 ">
-<b>三.芦山地震受伤情况</b>
+<b>三.地震受伤情况</b>
 </s:if>
 <s:if test="#bulk.pid==30 ">
-<b>四.芦山地震受灾情况</b>
+<b>四.地震受灾情况</b>
 </s:if>
 <s:if test="#bulk.pid==44">
 <b>五.地震救援组织情况</b>
@@ -108,10 +108,10 @@
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
 <input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption" 
-optionId=<s:property value="#option.id"/>>
+optionId=<s:property value="#option.id"/> flag="0">
 <s:property value="#option.value"/></input>
 <s:if test="#option.edit==1">
-<input type="text" value="" optionId=<s:property value="#option.id"/>  class="remarkForR"></input>
+<input type="text" value="" optionId=<s:property value="#option.id"/>  class="remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
 &nbsp&nbsp
 </s:iterator>
@@ -123,11 +123,11 @@ optionId=<s:property value="#option.id"/>>
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
 <input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption" 
-optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/>>
+optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.edit"/> --%>
 <s:property value="#option.value"/></input>
 
 <s:if test="#option.edit==1">
-<input type="text"  value="" optionId=<s:property value="#option.id"/>  class="remarkForC"></input>
+<input type="text"   value="" optionId=<s:property value="#option.id"/>  class="remarkForC" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
 &nbsp&nbsp&nbsp
 </s:iterator>
@@ -156,8 +156,9 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
 
 </s:if>
 <s:if test="#bulk.pid==75"> 
-对于以下问题，请根据您的状况选择适合的选项，“1”代表非常不符合您的想法，“6”代
-表非常符合，以此类推。
+<br><br>
+<b>对于以下问题，请根据您的状况选择适合的选项，“1”代表非常不符合您的想法，“6”代
+表非常符合，以此类推。</b>
 
 </s:if>
 <br> 
@@ -177,13 +178,18 @@ optionId=<s:property value="#option.id"/> edit=<s:property value="#option.edit"/
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="./jquery/jquery.min.js"></script>
-    <script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).on("blur",".remarkForR", function(){
 var remark = $(this).val();
 //alert(remark);
 		var opId = $(this).attr("optionId");//获取选项的编号
 		//alert(opId);
+		//并让该选项选中
+		//$(this).prev().attr("checked",true);
+		/* alert(999);
+		document.getElementById(opId).checked=true;
+		alert(000); */
 		params = {
 				"remark":remark,
 				"optionId":opId
@@ -242,16 +248,33 @@ var remark = $(this).val();
 	})
 $(document).on("click",".checkOption", function(){
 
-var checked = $(this).is(':checked');
+
 	//alert(checked);
 	var opId = $(this).attr("optionId");//获取选项的编号
-	//alert(opId);
+	alert(opId);
+	var checked = $(this).is(':checked');
+	//document.getElementById(opId).disabled = true;
+	if(document.getElementById(opId)!=null){
+		//alert(111);
+		//alert(checked);
+		if(checked==true){
+				document.getElementById(opId).disabled = false;
+			}
+		else if(checked==false){
+			//$(this).removeAttr("checked");
+			document.getElementById(opId).disabled = true;
+			document.getElementById(opId).value="";
+			//alert(22);
+		}
+		
+	}
+	
 	params = {
 			"checked":checked,
 			"optionId":opId
 	}
 	 //alert(checked); 
-	
+	// document.getElementById(opId).disabled = false;
 	 $.ajax({
 		url : 'survey_checkChangeForC',
 		type : 'post',
@@ -275,10 +298,41 @@ if(val==null){
 }
 else checked=true;
 */
+var opId = $(this).attr("optionId");//获取选项的编号
+	
+if(document.getElementById(opId)!=null){
+	//alert(111);
+	if($(this).attr("flag")==1){
+		$(this).attr("flag","0");
+		$(this).removeAttr("checked");
+		document.getElementById(opId).disabled = true;
+		document.getElementById(opId).value="";
+	}
+	else{
+		$(this).attr("flag","1");
+		$(this).attr("checked","checked");
+		document.getElementById(opId).disabled = false;
+	}
+}
+	
 var checked = $(this).is(':checked');
 	//alert(checked);
-	var opId = $(this).attr("optionId");//获取选项的编号
+	
 	//alert(opId);
+	/*  if(opId.equals("71")){
+		
+	}  */
+	//alert(111);
+	//alert($(this).attr("flag"));
+	
+	 /* if(checked){
+		document.getElementById(opId).disabled = false;
+	}
+	 if(checked==false){
+		 document.getElementById(opId).disabled = true;
+	 }  */
+	//$("#"+opId).disabled=true;
+	
 	params = {
 			"checked":checked,
 			/* "newNum": Number($("#exCont").attr("newNum")),

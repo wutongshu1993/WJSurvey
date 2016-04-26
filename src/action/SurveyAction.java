@@ -191,7 +191,7 @@ public class SurveyAction {
 		List l = c2.list(); 
 		if (!l.isEmpty()) {
 			a = (Answer)c2.list().get(0);	
-			remark = a.getRemark();
+			//remark = a.getRemark();
 			//error???
 		}
 		else {
@@ -219,6 +219,11 @@ public class SurveyAction {
 					session.save(a);
 					this.status="添加选项成功";
 				
+			}
+		}
+		else {
+			if (a!=null) {
+				session.delete(a);
 			}
 		}
 			System.out.println("True");
