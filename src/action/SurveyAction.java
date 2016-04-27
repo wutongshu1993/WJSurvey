@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.Delayed;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -171,6 +172,35 @@ public class SurveyAction {
 		Problem p;
 		//不同的人用的是不同的浏览器，所以session应该也是不同的
 		surveyId = ActionContext.getContext().getSession().get("surveyId").toString();
+		if (optionId==71) {//14题选了否，需要将14、15、16所有答案清空
+			if (checked) {
+				int[] pids={36,37,38,39,40,41,42};
+				//for(int i=0;i<pids.length;i++){//and a.problem.id in(36,37,38,39,40,41,42) 
+					
+//				String hql = "delete from Answer a where a.survey.id=:surveyId ";
+//					Query q = session.createQuery(hql);
+//					q.setParameter("surveyId", surveyId);
+//					q.executeUpdate();
+//					session.beginTransaction().commit();
+//				//}
+//				session.close();
+//				return "success";
+				for(int i=0;i<pids.length;i++){
+				Criteria cc = session.createCriteria(Answer.class)
+						.add(Restrictions.eq("survey.id", surveyId))
+						.add(Restrictions.eq("problem.id", pids[i]));
+				List<Answer> aaList = cc.list();
+				if (aaList.size()>0) {
+					Answer aa = aaList.get(0);
+					session.delete(aa);
+				}
+				}
+				session.getTransaction().commit();
+				session.close();
+				return "success";
+			}
+		}
+		
 		Criteria c = session.createCriteria(Options.class).
 				add(Restrictions.eq("id", optionId));
 		op = (Options)c.list().get(0);//将该选项号对应的选项取出来

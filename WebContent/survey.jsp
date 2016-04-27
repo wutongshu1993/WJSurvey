@@ -111,7 +111,7 @@
 optionId=<s:property value="#option.id"/> flag="0">
 <s:property value="#option.value"/></input>
 <s:if test="#option.edit==1">
-<input type="text" value="" optionId=<s:property value="#option.id"/>  class="remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
+<input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
 &nbsp&nbsp
 </s:iterator>
@@ -318,10 +318,84 @@ if(document.getElementById(opId)!=null){
 var checked = $(this).is(':checked');
 	//alert(checked);
 	
-	//alert(opId);
-	/*  if(opId.equals("71")){
-		
-	}  */
+	alert(opId);
+	 if(opId==71){//否
+		 if(checked==true){
+		//document.getElementById(73).value="";
+		 var x = document.getElementsByName("36");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+			 x[i].value = "";
+			
+		 }
+		 var x = document.getElementsByName("37");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+			 x[i].value = "";
+		 }
+		 var x = document.getElementsByName("38");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+		 }
+		 var x = document.getElementsByName("39");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+		 }
+		 var x = document.getElementsByName("40");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+			 x[i].value = "";
+		 }
+		 var x = document.getElementsByName("41");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+		 }
+		 var x = document.getElementsByName("42");
+		 for(var i=0;i<x.length;i++){
+			 x[i].disabled = true;
+			 x[i].checked = false;
+		 }
+		 }
+		 
+	} 
+	 if(opId==70){
+		 if(checked==true){
+			 var x = document.getElementsByName("36");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 var x = document.getElementsByName("37");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 var x = document.getElementsByName("38");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 var x = document.getElementsByName("39");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 var x = document.getElementsByName("40");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 var x = document.getElementsByName("41");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 var x = document.getElementsByName("42");
+			 for(var i=0;i<x.length;i++){
+				 x[i].disabled = false;
+			 }
+			 }
+	 }
 	//alert(111);
 	//alert($(this).attr("flag"));
 	
@@ -391,6 +465,7 @@ $(document).on("click","#surveySubmit", function(){
 			/* alert("您答对了：" + data.score + "个题目" + "\n" + data.status);
 			window.location.reload(); */
 			alert("提交成功，感谢您的配合");
+			window.location.reload();
 		}
 </script>
 </body>
