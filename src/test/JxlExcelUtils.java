@@ -20,6 +20,7 @@ import jxl.write.WritableFont;
 import jxl.write.WritableSheet;  
 import jxl.write.WritableWorkbook; 
 import model.Detail;
+import model.DetailInfo;
 
 public class JxlExcelUtils {
 	
@@ -146,6 +147,101 @@ public static int exportToExcel(HttpServletResponse response,List<Detail> objDat
 
     return flag;  
 }
+
+public static int exportToExcel2(HttpServletResponse response,List<DetailInfo> objData,String sheetName,List<String> columns){
+	int flag = 0;
+	WritableWorkbook wwb;
+	try {  
+        //根据传进来的file对象创建可写入的Excel工作薄  
+        OutputStream os = response.getOutputStream();  
+          
+        wwb = Workbook.createWorkbook(os);  
+
+        /* 
+         * 创建一个工作表、sheetName为工作表的名称、"0"为第一个工作表 
+         * 打开Excel的时候会看到左下角默认有3个sheet、"sheet1、sheet2、sheet3"这样 
+         * 代码中的"0"就是sheet1、其它的一一对应。 
+         * createSheet(sheetName, 0)一个是工作表的名称，另一个是工作表在工作薄中的位置 
+         */  
+        WritableSheet ws = wwb.createSheet(sheetName, 0);  
+          
+        WritableFont font1 =new WritableFont(WritableFont.createFont("微软雅黑"), 10 ,WritableFont.BOLD);  
+        WritableCellFormat wcf = new WritableCellFormat(font1);  
+
+        //判断一下表头数组是否有数据  
+        if (columns != null && columns.size() > 0) {  
+
+            //循环写入表头  
+            for (int i = 0; i < columns.size(); i++) {  
+
+                /* 
+                 * 添加单元格(Cell)内容addCell() 
+                 * 添加Label对象Label() 
+                 * 数据的类型有很多种、在这里你需要什么类型就导入什么类型 
+                 * 如：jxl.write.DateTime 、jxl.write.Number、jxl.write.Label 
+                 * Label(i, 0, columns[i], wcf) 
+                 * 其中i为列、0为行、columns[i]为数据、wcf为样式 
+                 * 合起来就是说将columns[i]添加到第一行(行、列下标都是从0开始)第i列、样式为什么"色"内容居中 
+                 */  
+                ws.addCell(new Label(i, 0, columns.get(i), wcf));  
+            }  
+
+            //判断表中是否有数据  
+            if (objData != null && objData.size() > 0) {  
+                //循环写入表中数据  
+                for (int i = 0; i < objData.size(); i++) {  
+
+                    //转换成map集合{activyName:测试功能,count:2}  
+//                    Map<String, Object> map = (Map<String, Object>)objData.get(i);  
+//                	String name = objData.get(i).getUser().getName();
+//                	System.out.println("###########"+name);
+                	DetailInfo detail = objData.get(i);
+                    //循环输出map中的子集：既列值  
+//                    int j=0;  
+//                    for(Object o:map.keySet()){  
+//                        //ps：因为要“”通用”“导出功能，所以这里循环的时候不是get("Name"),而是通过map.get(o)  
+//                        ws.addCell(new Label(j,i+1,String.valueOf(map.get(o))));  
+//                        j++;  
+//                    }  
+                	ws.addCell(new Label(0, i+1, detail.getUser().getName()));
+            		ws.addCell(new Label(1, i+1, detail.getUser().getTel()));
+            		ws.addCell(new Label(2, i+1, detail.getUser().gethTel()));
+            		ws.addCell(new Label(3, i+1, detail.getUser().getAddress().getQuX()));
+            		ws.addCell(new Label(4, i+1, detail.getUser().getAddress().getXiangJ()));
+            		ws.addCell(new Label(5, i+1, detail.getUser().getAddress().getCun()));
+            		ws.addCell(new Label(6, i+1, detail.getUser().getAddress().getZuD()));
+            		ws.addCell(new Label(7, i+1, detail.getUser().getAddress().getHao()));
+                	ws.addCell(new Label(8, i+1, detail.getAnswer().getProblem().getPid()+""));
+            		ws.addCell(new Label(9, i+1, detail.getAnswer().getProblem().getTitle()));
+            		ws.addCell(new Label(10, i+1, detail.getAnswer().getOptions().getValue()));
+            		ws.addCell(new Label(11, i+1, detail.getAnswer().getRemark()));
+                }  
+            }else{  
+                flag = -1;  
+            }  
+
+            //写入Exel工作表  
+            wwb.write();  
+
+            //关闭Excel工作薄对象   
+            wwb.close();  
+              
+            //关闭流  
+            os.flush();  
+            os.close();  
+              
+            os =null;  
+        }  
+    }catch (IllegalStateException e) {  
+        System.err.println(e.getMessage());  
+    }  
+    catch (Exception ex) {  
+        flag = 0;  
+        ex.printStackTrace();  
+    }  
+
+    return flag;  
+}
 /** 
  * 下载excel 
  * @author  
@@ -170,7 +266,21 @@ public static void exportexcle(HttpServletResponse response,String filename,List
 
 
 } 
+public static void exportexcle2(HttpServletResponse response,String filename,List<DetailInfo> details,String sheetName,List<String> columns)  
+{  
+    //调用上面的方法、生成Excel文件  
+    response.setContentType("application/vnd.ms-excel");  
+    //response.setHeader("Content-Disposition", "attachment;filename="+filename);  
+    try {  
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(filename.getBytes("gb2312"), "ISO8859-1") + ".xls");  
 
+        exportToExcel2(response, details, sheetName, columns);  
+    } catch (UnsupportedEncodingException e) {  
+        e.printStackTrace();  
+    }   
+
+
+} 
 //public static void main(String[] args){
 //	HttpServletResponse response = ServletActionContext.getResponse();
 //	String filename = "a.xls";

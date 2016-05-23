@@ -61,6 +61,10 @@
 			<interceptor-ref name="loginInterceptor"></interceptor-ref>  -->
 		</action>
 		
+		<action name="excelDetail" class="action.ResultAction" method="excelDetail">
+		<result name="success">/resultPage.jsp</result>
+		</action>
+		
 		<action name="excelTest" class="test.TestAction"
 			method="excel">
 			<result name="success">/detail.jsp</result>

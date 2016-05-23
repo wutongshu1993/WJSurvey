@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -17,6 +18,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 import model.Answer;
 import model.Detail;
+import model.DetailInfo;
 import model.Options;
 import model.Survey;
 import model.User;
@@ -103,7 +105,86 @@ public String detail() throws Exception{
 	}
 	return "success";
 }
+/**
+ * 把单张表导出到表格
+ * @return
+ */
+public String excelDetail(){
+	//System.out.println(surveyId);
+	Session session = model.Util.sessionFactory.openSession();
+	session.beginTransaction();
+	HttpServletResponse response = ServletActionContext.getResponse();
+	String filename = "excel";
+	String sheetName = "sheet1";
+//	String sql = "from User user left join Answer answer with user.survey.id=answer.survey.id";
+//	String sql = "select user,answer from User user ,Answer answer where user.survey.id=answer.survey.id";
+	String sql = "select new model.DetailInfo(answer,user)from User user ,Answer answer where user.survey.id=answer.survey.id";
+	Query query = session.createQuery(sql);
+
+//	List<DetailInfo> list = new ArrayList<>();
+	List<DetailInfo> detailInfos = query.list();
+//	for(DetailInfo info : detailInfos){
+//		list.add(info);
+//	}
+	
+	List<String> columns = new ArrayList<>();
+	columns.add("姓名");
+	columns.add("电话");
+	columns.add("家庭电话");
+	columns.add("区/县");
+	columns.add("乡/街道");
+	columns.add("村");
+	columns.add("组/队");
+	columns.add("号");
+	columns.add("题号");
+	columns.add("题干");
+	columns.add("答案");
+	columns.add("备注");
+	JxlExcelUtils.exportexcle2(response, filename, detailInfos, sheetName, columns);
+	return "success";
+}
 public String excel(){
+
+	System.out.println(surveyId);
+	Session session = model.Util.sessionFactory.openSession();
+	session.beginTransaction();
+	HttpServletResponse response = ServletActionContext.getResponse();
+	String filename = "excel";
+	String sheetName = "sheet1";
+//	String sql = "from User user left join Answer answer with user.survey.id=answer.survey.id";
+//	String sql = "select user,answer from User user ,Answer answer where user.survey.id=answer.survey.id";
+	String sql = "select new model.DetailInfo(answer,user)from User user ,Answer answer where user.survey.id="+surveyId+"and user.survey.id=answer.survey.id ";
+	Query query = session.createQuery(sql);
+
+//	List<DetailInfo> list = new ArrayList<>();
+	List<DetailInfo> detailInfos = query.list();
+//	for(DetailInfo info : detailInfos){
+//		list.add(info);
+//	}
+	
+	List<String> columns = new ArrayList<>();
+	columns.add("姓名");
+	columns.add("电话");
+	columns.add("家庭电话");
+	columns.add("区/县");
+	columns.add("乡/街道");
+	columns.add("村");
+	columns.add("组/队");
+	columns.add("号");
+	columns.add("题号");
+	columns.add("题干");
+	columns.add("答案");
+	columns.add("备注");
+	JxlExcelUtils.exportexcle2(response, filename, detailInfos, sheetName, columns);
+	return "success";
+
+}
+/**
+ * excel的表格导出来包括调查者的个人信息
+ * @return
+ */
+public String excelUserInfo(){
+
 	System.out.println(surveyId);
 	Session session = model.Util.sessionFactory.openSession();
 	session.beginTransaction();
@@ -127,6 +208,14 @@ public String excel(){
 	columns.add("备注");
 	JxlExcelUtils.exportexcle(response, filename, details, sheetName, columns);
 	return "success";
+
+}
+/**
+ * 把所有数据导出到表格
+ * @return
+ */
+public String excelAll(){
+	return null;
 }
 public String getUsername() {
 	return username;

@@ -9,13 +9,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>问卷结果</title>
 <!-- Bootstrap core CSS -->
-<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap theme -->
-<link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
- <link href="./css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
+<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+ <link href="${pageContext.request.contextPath}/css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
 	<div class="container theme-showcase" >
+	<div align="right">
+	<a href="excelDetail" >导出所有问卷</a>
+	</div>
 		<table class=" table table-bordered table-striped ">
 			<thead>
 				<tr>
@@ -73,8 +77,8 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="./jquery/jquery.min.js"></script>
-	<script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/jquery/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 function go(c){//该函数指定要跳转的页面
 	  
