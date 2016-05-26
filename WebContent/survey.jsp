@@ -11,17 +11,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>问卷调查</title>
  <!-- Bootstrap core CSS -->
-    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap theme -->
-    <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="./css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
 
 
 <div class="container theme-showcase" role="main">
 <div align="right">
-<a href="./login.jsp" >问卷统计</a>
+<a href="${pageContext.request.contextPath}/login.jsp" >问卷统计</a>
 </div>
 <div class="jumbotron">
 <h2 align="center">调查问卷</h2>
@@ -45,10 +45,10 @@
 <input type="text" class="form-control" name="name" id="name" style="width:60%"/>
 </div>
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-家庭电话：<input type="text" class="form-control" name="homeTel" id="homeTel" style="width:60%"/>
+家庭电话：<input type="text" class="form-control " name="homeTel" id="homeTel" style="width:60%"/>
 </div>
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-手机：<input type="text" class="form-control" name="tel" id="tel" style="width:60%"/>
+手机：<input type="text" class="form-control " name="tel" id="tel" style="width:60%"/>
 </div>
 </div>
 <br>
@@ -104,48 +104,60 @@
 <img alt="" src="<s:property value="#item.problem.img"/>">
 </s:if>
 <br>
-<s:if test="#item.problem.type==1"> 
+<s:if test="#item.problem.type==1"> <!--  单选-->
+<span class="danxuan">
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption" 
+<input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption form-control" 
 optionId=<s:property value="#option.id"/> flag="0">
 <s:property value="#option.value"/></input>
 <s:if test="#option.edit==1">
-<input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
+
+
+<input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="form-control remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
+
+
 </s:if>
 &nbsp&nbsp
 </s:iterator>
+</span>
 <br>
 <%--  <s:radio list="#item.options"  listValue="value" listKey="value" value="value"></s:radio> --%> 
  </s:if> 
  
- <s:if test="#item.problem.type==2"> 
+ <s:if test="#item.problem.type==2"> <!-- 多选 -->
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption" 
+<input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption form-control" 
 optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.edit"/> --%>
 <s:property value="#option.value"/></input>
 
 <s:if test="#option.edit==1">
-<input type="text"   value="" optionId=<s:property value="#option.id"/>  class="remarkForC" id=<s:property value="#option.id"/> disabled="disabled"></input>
+<input type="text"   value="" optionId=<s:property value="#option.id"/>  class="remarkForC form-control" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
 &nbsp&nbsp&nbsp
 </s:iterator>
 <br>
  </s:if> 
  
-  <s:if test="#item.problem.type==3"> 
+  <s:if test="#item.problem.type==3"> <!-- 填空 -->
 <%-- <s:iterator value="#item.options" var="option">
 <s:hidden name="ids" value="id"/>
 <s:property value="#option.value"/> --%>
-<input type="text"  value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></input>
+<s:if test="#item.problem.id==17||#item.problem.id>=22 && #item.problem.id<=29 || #item.problem.id>=47 && #item.problem.id<=49 ||  #item.problem.id>=67 && #item.problem.id<=68 || #item.problem.id>=84 && #item.problem.id<=87">
+<input type="text"  value="" problemId=<s:property value="#item.problem.id"/> id=<s:property value="#item.problem.id"/> class="remarkForE numberRemark form-control"></input>
+</s:if>
+<s:else>
+<input type="text"  value="" id=<s:property value="#item.problem.id"/> problemId=<s:property value="#item.problem.id"/> optionId=<s:property value="#option.id"/>  class="remarkForE form-control"></input>
+</s:else>
+
 &nbsp&nbsp
 <br>
 <%-- </s:iterator> --%>
  </s:if> 
  
- <s:if test="#item.problem.type==4"> 
-<textarea type="" value="" optionId=<s:property value="#option.id"/>  class="remarkForE"></textarea>
+ <s:if test="#item.problem.type==4"> <!-- 多文本框 -->
+<textarea type="" value="" optionId=<s:property value="#option.id"/>  class="remarkForE form-control"></textarea>
 &nbsp&nbsp
 <br>
  </s:if> 
@@ -177,8 +189,8 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
 <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./jquery/jquery.min.js"></script>
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/jquery/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).on("blur",".remarkForR", function(){
 var remark = $(this).val();
@@ -298,9 +310,18 @@ if(val==null){
 }
 else checked=true;
 */
+//实现选择了以后让备注框里面的内容清除
+var parent = $(this).parent(".danxuan");
+var ra = parent.children(".remarkForR");//得到的是一个数组
+if(ra.length>0){
+ra[0].disabled = true;
+ra.val(" ");
+}
+
+
 var opId = $(this).attr("optionId");//获取选项的编号
 	
-if(document.getElementById(opId)!=null){
+ if(document.getElementById(opId)!=null){
 	//alert(111);
 	if($(this).attr("flag")==1){
 		$(this).attr("flag","0");
@@ -309,17 +330,17 @@ if(document.getElementById(opId)!=null){
 		document.getElementById(opId).value="";
 	}
 	else{
-		$(this).attr("flag","1");
+		$(this).attr("flag","0");
 		$(this).attr("checked","checked");
 		document.getElementById(opId).disabled = false;
 	}
-}
+} 
 	
 var checked = $(this).is(':checked');
 	//alert(checked);
 	
-	alert(opId);
-	 if(opId==71){//否
+	//alert(opId);
+	 if(opId==71){//"否"
 		 if(checked==true){
 		//document.getElementById(73).value="";
 		 var x = document.getElementsByName("36");
@@ -467,6 +488,38 @@ $(document).on("click","#surveySubmit", function(){
 			alert("提交成功，感谢您的配合");
 			window.location.reload();
 		}
+		function checkNumberp(){
+			console.log($(this));
+			console.log($(this.val()));
+			var num =$(this).val();
+			
+			var pid = $(this).attr("class");
+			alert(pid);
+			var num = $("#"+pid).val();
+			//var num = document.getElementById(id).val();
+			alert(num);
+			var reg = /^[0-9]*$/;
+			if(!reg.test(num)){
+				alert("请输入数字");
+				return false;
+			}
+			else return true;
+		}
+		$(document).on("blur",".numberRemark", function(){
+			//var num =$(this).val();
+			var pid = $(this).attr("problemId");
+			//alert(pid);
+			var num = $("#"+pid).val();
+			//var num = document.getElementById(id).val();
+			//alert(num);
+			var reg = /^[0-9]*$/;
+			if(!reg.test(num)){
+				alert("请输入数字");
+				$(this).focus();
+				return false;
+			}
+			else return true;
+		});
 </script>
 </body>
 </html>
