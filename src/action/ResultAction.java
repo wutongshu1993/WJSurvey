@@ -12,6 +12,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -93,20 +94,25 @@ public String detail() throws Exception{
 	Criteria c = session.createCriteria(Survey.class).add(Restrictions.eq("id", surveyId));
 	Survey survey = (Survey)c.list().get(0);
 	time = survey.time;
-	Criteria c2 = session.createCriteria(Answer.class).add(Restrictions.eq("survey.id", surveyId));
+	Criteria c2 = session.createCriteria(Answer.class).add(Restrictions.eq("survey.id", surveyId))
+			.addOrder(Order.asc("problem.id"));
 	List<Answer> answers = c2.list();
 	for (Answer answer : answers) {
 		Detail detail = new Detail();
 		detail.setTitle(answer.getProblem().title);
 		detail.setRemark(answer.getRemark());
 		detail.setPid(answer.getProblem().pid);
-		detail.setAnswer(answer.getOptions().getValue());
+		if (answer.getOptions()!=null) {
+			detail.setAnswer(answer.getOptions().getValue());
+		}
+		
 		details.add(detail);
 	}
 	return "success";
 }
 /**
- * 把单张表导出到表格
+ * 将所有信息导出到一张表中，包括用户信息。
+ * 
  * @return
  */
 public String excelDetail(){
@@ -143,6 +149,10 @@ public String excelDetail(){
 	JxlExcelUtils.exportexcle2(response, filename, detailInfos, sheetName, columns);
 	return "success";
 }
+/**
+ * 把单张表导出到表格(包括用户信息)
+ * @return
+ */
 public String excel(){
 
 	System.out.println(surveyId);
@@ -180,7 +190,7 @@ public String excel(){
 
 }
 /**
- * excel的表格导出来包括调查者的个人信息
+ * excel的表格导出来（不包括调查者的个人信息）
  * @return
  */
 public String excelUserInfo(){
@@ -211,7 +221,7 @@ public String excelUserInfo(){
 
 }
 /**
- * 把所有数据导出到表格
+ * 
  * @return
  */
 public String excelAll(){

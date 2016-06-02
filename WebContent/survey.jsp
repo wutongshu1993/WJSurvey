@@ -108,16 +108,23 @@
 <span class="danxuan">
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
+<s:if test="#item.problem.id>=59 && #item.problem.id<=74 ">
+<input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption form-control weijiuzhen" 
+optionId=<s:property value="#option.id"/> flag="0">
+<s:property value="#option.value"/></input>
+<s:if test="#option.edit==1">
+<input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="form-control remarkForR weijiuzhen" id=<s:property value="#option.id"/> disabled="disabled"></input>
+</s:if>
+</s:if>
+<s:else>
 <input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption form-control" 
 optionId=<s:property value="#option.id"/> flag="0">
 <s:property value="#option.value"/></input>
 <s:if test="#option.edit==1">
-
-
 <input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="form-control remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
-
-
 </s:if>
+</s:else>
+
 &nbsp&nbsp
 </s:iterator>
 </span>
@@ -128,13 +135,24 @@ optionId=<s:property value="#option.id"/> flag="0">
  <s:if test="#item.problem.type==2"> <!-- 多选 -->
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
-<input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption form-control" 
+<s:if test="#item.problem.id>=59 && #item.problem.id<=74 ">
+<input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption form-control weijiuzhen" 
+optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.edit"/> --%>
+<s:property value="#option.value"/></input>
+
+<s:if test="#option.edit==1">
+<input type="text"   value="" optionId=<s:property value="#option.id"/>  class="remarkForC form-control weijiuzhen" id=<s:property value="#option.id"/> disabled="disabled"></input>
+</s:if>
+</s:if>
+<s:else>
+<input type="checkbox"  value="<s:property value="#option.value"/>" class="checkOption form-control " 
 optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.edit"/> --%>
 <s:property value="#option.value"/></input>
 
 <s:if test="#option.edit==1">
 <input type="text"   value="" optionId=<s:property value="#option.id"/>  class="remarkForC form-control" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
+</s:else>
 &nbsp&nbsp&nbsp
 </s:iterator>
 <br>
@@ -147,6 +165,9 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
 <s:if test="#item.problem.id==17||#item.problem.id>=22 && #item.problem.id<=29 || #item.problem.id>=47 && #item.problem.id<=49 ||  #item.problem.id>=67 && #item.problem.id<=68 || #item.problem.id>=84 && #item.problem.id<=87">
 <input type="text"  value="" problemId=<s:property value="#item.problem.id"/> id=<s:property value="#item.problem.id"/> class="remarkForE numberRemark form-control"></input>
 </s:if>
+<s:elseif test="#item.problem.id>=59 && #item.problem.id<=74">
+<input type="text"  value="" id=<s:property value="#item.problem.id"/> problemId=<s:property value="#item.problem.id"/> optionId=<s:property value="#option.id"/>  class="remarkForE form-control weijiuzhen"></input>
+</s:elseif>
 <s:else>
 <input type="text"  value="" id=<s:property value="#item.problem.id"/> problemId=<s:property value="#item.problem.id"/> optionId=<s:property value="#option.id"/>  class="remarkForE form-control"></input>
 </s:else>
@@ -241,7 +262,7 @@ var remark = $(this).val();
 $(document).on("blur",".remarkForE", function(){
 var remark = $(this).val();
 //alert(remark);
-		var opId = $(this).attr("optionId");//获取选项的编号
+		var opId = $(this).attr("problemId");//获取问题的编号
 		//alert(opId);
 		params = {
 				"remark":remark,
@@ -250,7 +271,7 @@ var remark = $(this).val();
 		 //alert(checked); 
 		
 		 $.ajax({
-			url : 'survey_saveRemarkForR',
+			url : 'survey_saveRemarkForE',
 			type : 'post',
 			dataType : 'json',
 			data : params,
@@ -263,7 +284,7 @@ $(document).on("click",".checkOption", function(){
 
 	//alert(checked);
 	var opId = $(this).attr("optionId");//获取选项的编号
-	alert(opId);
+	//alert(opId);
 	var checked = $(this).is(':checked');
 	//document.getElementById(opId).disabled = true;
 	if(document.getElementById(opId)!=null){
@@ -417,6 +438,55 @@ var checked = $(this).is(':checked');
 			 }
 			 }
 	 }
+	 if(opId==181){//"未就诊，直接跳到30题"
+		 if(checked==true){
+		//document.getElementById(73).value="";
+		var w = document.getElementsByClassName("weijiuzhen");
+		for(var i=0;i<w.length;i++){
+			w[i].disabled = true;
+			w[i].checked = false;
+			w[i].value = "";
+		}
+		var x = document.getElementsByClassName("weijiuzhen remarkForE");
+		for(var i=0;i<x.length;i++){
+			x[i].disabled = true;
+			// x[i].checked = false;
+			x[i].value = ""; 
+		}
+		 }
+	 }
+	
+	 if(opId>=176 && opId<=180){
+		 var w = document.getElementsByClassName("weijiuzhen radioOption");
+				for(var i=0;i<w.length;i++){
+					w[i].disabled = false;
+				}
+				/* //单选题输入框不生效，且清空 */
+				 var v = document.getElementsByClassName("weijiuzhen remarkForR");
+					for(var i=0;i<v.length;i++){
+						v[i].disabled = true;
+						v[i].value = "";
+					} 
+					//填空题生效
+					var x = document.getElementsByClassName("weijiuzhen remarkForE");
+					for(var i=0;i<x.length;i++){
+						x[i].disabled = false;
+						x[i].value = "";
+					}
+					
+					//多选题生效
+					var y = document.getElementsByClassName("weijiuzhen checkOption");
+					for(var i=0;i<y.length;i++){
+						y[i].disabled = false;
+					}
+					//多选题输入框 不生效，且清空
+					var z = document.getElementsByClassName("weijiuzhen remarkForC");
+					for(var i=0;i<z.length;i++){
+						z[i].disabled = true;
+						z[i].value = "";
+					} 
+			 }
+	
 	//alert(111);
 	//alert($(this).attr("flag"));
 	
@@ -488,7 +558,7 @@ $(document).on("click","#surveySubmit", function(){
 			alert("提交成功，感谢您的配合");
 			window.location.reload();
 		}
-		function checkNumberp(){
+		/* function checkNumberp(){
 			console.log($(this));
 			console.log($(this.val()));
 			var num =$(this).val();
@@ -504,12 +574,13 @@ $(document).on("click","#surveySubmit", function(){
 				return false;
 			}
 			else return true;
-		}
+		} */
 		$(document).on("blur",".numberRemark", function(){
 			//var num =$(this).val();
 			var pid = $(this).attr("problemId");
 			//alert(pid);
-			var num = $("#"+pid).val();
+			//var num = $("#"+pid).val();
+			var num = $("[problemId="+pid+"]").val();
 			//var num = document.getElementById(id).val();
 			//alert(num);
 			var reg = /^[0-9]*$/;

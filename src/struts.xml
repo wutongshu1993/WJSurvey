@@ -30,7 +30,7 @@
 		</action>
 
 		<action name="login" class="action.ResultAction" method="login">
-			<result name="success" type="redirect">/result_list</result>
+			<result name="success" type="redirect">/result</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="not_login">
@@ -60,14 +60,22 @@
 			 <interceptor-ref name="defaultStack" /> 
 			<interceptor-ref name="loginInterceptor"></interceptor-ref>  -->
 		</action>
-		
-		<action name="excelDetail" class="action.ResultAction" method="excelDetail">
+		<!--导出所有问卷  -->
+		<!-- <action name="excelDetail" class="action.ResultAction" method="excelDetail">
 		<result name="success">/resultPage.jsp</result>
+		</action> -->
+		<action name="excelDetail" class="test.TestAction" method="excelAll">
+		<result name="success" type="json">
+				<param name="includeProperties">*</param>    
+			</result>	
 		</action>
 		
 		<action name="excelTest" class="test.TestAction"
 			method="excel">
-			<result name="success">/detail.jsp</result>
+			<!-- <result name="success">/detail.jsp</result> -->
+			<result name="success" type="json">
+				<param name="includeProperties">*</param>    
+			</result>	
 		</action>
 		
 		

@@ -18,7 +18,8 @@
 	<br>
 	<br>
 	<div align="right">
-	<a href="excelDetail" >导出所有问卷</a>
+	<button class="btn btn-default" id="exportButton">导出所有问卷</button>
+	<!-- <a href="excelDetail" >导出所有问卷</a> -->
 	</div>
 		<table class=" table table-bordered table-striped ">
 			<thead>
@@ -62,6 +63,26 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="${pageContext.request.contextPath}/jquery/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
-
+<script type="text/javascript">
+$(document).on("click", "#exportButton",function(){
+	//alert(22);
+	$.ajax({
+		url:'excelDetail',
+		type: "POST",
+		data: {
+			
+		},
+		
+		success: function(data){
+			//alert(data.exportPath);
+			// window.location=data.exportPath;
+			window.open(data.exportPath);
+			//alert(20);
+			
+		}
+		
+	});
+})
+</script>
 </body>
 </html>

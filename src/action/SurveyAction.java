@@ -99,6 +99,7 @@ public class SurveyAction {
 		return "success";
 	}
 	public String saveRemarkForE() throws Exception{
+		//这的optionId实际上是problemId
 		System.out.println(optionId);
 		System.out.println(remark);
 		Session session = model.Util.sessionFactory.openSession();
@@ -108,17 +109,17 @@ public class SurveyAction {
 		Problem p;
 		//不同的人用的是不同的浏览器，所以session应该也是不同的
 		surveyId = ActionContext.getContext().getSession().get("surveyId").toString();
-		Criteria c = session.createCriteria(Options.class).
-				add(Restrictions.eq("id", optionId));
-		op = (Options)c.list().get(0);//将该选项号对应的选项取出来
+//		Criteria c = session.createCriteria(Options.class).
+//				add(Restrictions.eq("problem.id", optionId));
+//		op = (Options)c.list().get(0);//将该选项号对应的选项取出来
 		
 		Criteria c1 = session.createCriteria(Problem.class).
-				add(Restrictions.eq("id", op.problem.id));
+				add(Restrictions.eq("id", optionId));
 		p = (Problem)c1.list().get(0);
 		
 		//此处应该再加一个条件对survey.id的判断 
 		Criteria c2 = session.createCriteria(Answer.class)
-				.add(Restrictions.eq("problem.id", op.problem.id))
+				.add(Restrictions.eq("problem.id", optionId))
 				.add(Restrictions.eq("survey.id", surveyId));
 		
 		Criteria c3 = session.createCriteria(Survey.class)
@@ -138,7 +139,7 @@ public class SurveyAction {
 				a=new Answer();
 				a.setSurvey(survey);
 				a.setProblem(p);
-				a.setOptions(op);
+				//a.setOptions(op);
 				a.setRemark(remark);
 				session.save(a);
 				this.status="添加选项成功";
@@ -148,7 +149,7 @@ public class SurveyAction {
 					a=new Answer();
 					a.setSurvey(survey);
 					a.setProblem(p);
-					a.setOptions(op);
+					//a.setOptions(op);
 					a.setRemark(remark);
 					session.save(a);
 					this.status="添加选项成功";
@@ -199,6 +200,27 @@ public class SurveyAction {
 				session.close();
 				return "success";
 			}
+		}
+		if (optionId==181) {
+			//选了未就诊，需要将59~74所有答案清空
+			if (checked) {
+				int[] pids={59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74};
+				for(int i=0;i<pids.length;i++){
+				Criteria cc = session.createCriteria(Answer.class)
+						.add(Restrictions.eq("survey.id", surveyId))
+						.add(Restrictions.eq("problem.id", pids[i]));
+				List<Answer> aaList = cc.list();
+				if (aaList.size()>0) {
+					Answer aa = aaList.get(0);
+					session.delete(aa);
+				}
+				}
+				session.getTransaction().commit();
+				session.close();
+				return "success";
+			}
+		
+			
 		}
 		
 		Criteria c = session.createCriteria(Options.class).
