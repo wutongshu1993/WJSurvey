@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
@@ -18,6 +19,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.net.httpserver.Authenticator.Success;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -27,7 +29,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import model.Answer;
 import model.Detail;
 import model.Problem;
+import model.Survey;
 import model.User;
+import util.ExcelUtil;
 
 public class TestAction {
 	String exportPath ;	
@@ -195,8 +199,52 @@ public String excelAll(){
 	}
 	return ActionSupport.SUCCESS;
 }
+/**
+ * 导出问卷的时候增加了时间和问卷编号
+ * @return
+ */
+public String excelAll2(){
+	Session session = model.Util.sessionFactory.openSession();
+	String hql = "from Problem";
+	Query query = session.createQuery(hql);
+	List<Problem> problems = query.list();
+	int len = problems.size();//获取一共有多少个问题
+	List<List<Answer>> results = new ArrayList<>();//所有用户的答案
+	List<User> users = session.createCriteria(User.class).list();//所有用户
+	List<Survey> surveys = new ArrayList<>();//所有用户的问卷信息
+	for(User user : users){
+		List<Answer> answers = new ArrayList<>();//一个用户对应的所有答案
+		answers = session.createCriteria(Answer.class).add(Restrictions.eq("survey.id", user.survey.getId()))
+				.addOrder(Order.asc("problem.id")).list();
+//		answers = session.createQuery("from Answer a where a.survey.id="+user.survey.getId()+"order by a.problem.id").list();
+		results.add(answers);
+		
+		Survey survey = (Survey)session.createCriteria(Survey.class).add(Restrictions.eq("id", user.survey.getId())).list().get(0);
+		surveys.add(survey);
+	}
+	String fileName = "所有调查问卷结果.xls";
+	HttpServletRequest request = ServletActionContext.getRequest();
+    HttpServletResponse response =ServletActionContext.getResponse();
+	try{
+		OutputStream os = response.getOutputStream();
+		 //设置对话框
+        response.setHeader("Content-disposition", "attachment;filename="+ new String(fileName.getBytes("GB2312"),"ISO-8859-1"));
+        //设置 MIME(Excel)
+        response.setContentType("application/vnd.ms-excel");
+        //设置编码
+        response.setCharacterEncoding("UTF-8");
+        ExcelUtil.exportExcel2("sheet1", problems,  users, surveys,results, os);
+        os.flush();
+        os.close();
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
+	
+	return ActionSupport.SUCCESS;
+}
 public static void main(String[] args){
-	 new TestAction().excelAll();
+	 new TestAction().excelAll2();
 }
 public String getExportPath() {
 	return exportPath;

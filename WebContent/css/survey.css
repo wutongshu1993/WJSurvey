@@ -1,4 +1,34 @@
 @CHARSET "UTF-8";
+body{
+	font-family:"微软雅黑";
+	background:#ddf4f4 url("../img/bg1.jpg") repeat-x;
+}
+.top{
+	padding-left:15px;
+	padding-right:15px;
+	margin-left:auto;
+	margin-right:auto;
+	background:url("../img/bg0.jpg") no-repeat top center;
+	padding-top:105px;
+}
+.main{
+	background:white;
+}
+@media
+(min-width: 1200px)
+.top{
+	width:1170px;
+}
+@media
+(min-width: 992px)
+.top{
+	width:970px;
+}
+@media
+(min-width: 768px)
+.top{
+	width:750px;
+}
 .checkOption{
 	
 }
@@ -16,4 +46,47 @@
 }
 .STYLE1 {
 	font-size: 16px
+}
+.header{
+	color: #19a8ee;
+	font-size: 24px !important;
+	font-weight:bold;
+	margin-top:30px;
+	margin-bottom:30px;
+}
+.info{
+	font-size:18px;
+	color:gray;
+	text-indent:2em;
+	line-height:23px;
+}
+.title{
+	color:#444;
+	font-size:15px;
+	font-weight:bold;
+	line-height:20px;
+	padding-top:2px;
+}
+b{
+	display:block;
+	font-size:17px;
+	font-weight:bold;
+	line-height:25px;
+	padding-top:40px;
+	padding-bottom:5px;
+}
+hr{
+	margin-top:80px;
+	border-top:1px solid gray;
+}
+footer{
+	margin-bottom:30px;
+	text-align:center;
+	font-weight:bold;
+	color:gray;
+	font-size:10px;
+	height:40px;
+}
+#surveySubmit{
+	width:100%;
 }

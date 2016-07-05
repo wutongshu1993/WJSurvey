@@ -30,7 +30,7 @@
 		</action>
 
 		<action name="login" class="action.ResultAction" method="login">
-			<result name="success" type="redirect">/result</result>
+			<result name="success" type="redirect">/result_list</result>
 			<result name="error">/error.jsp</result>
 		</action>
 		<action name="not_login">
@@ -41,6 +41,7 @@
 			<result name="not_login">/login.jsp</result>
 			<interceptor-ref name="loginInterceptor"></interceptor-ref>
 		</action>
+		<!-- 含有分页 -->
 		<action name="result_list" class="action.ResultAction" method="result_list">
 			<result name="success">/resultPage.jsp</result>
 			<result name="not_login">/login.jsp</result>
@@ -54,7 +55,7 @@
 			<interceptor-ref name="loginInterceptor"></interceptor-ref> 
 		</action>
 		<action name="excel" class="action.ResultAction"
-			method="excel">
+			method="excelUserInfo">
 			<result name="success">/detail.jsp</result>
 			<!-- <result name="not_login">/login.jsp</result>
 			 <interceptor-ref name="defaultStack" /> 
@@ -64,7 +65,7 @@
 		<!-- <action name="excelDetail" class="action.ResultAction" method="excelDetail">
 		<result name="success">/resultPage.jsp</result>
 		</action> -->
-		<action name="excelDetail" class="test.TestAction" method="excelAll">
+		<action name="excelDetail" class="test.TestAction" method="excelAll2">
 		<result name="success" type="json">
 				<param name="includeProperties">*</param>    
 			</result>	

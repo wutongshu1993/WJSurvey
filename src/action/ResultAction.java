@@ -68,7 +68,7 @@ public String result_list() {
 	Session session = model.Util.openSession();
 	session.beginTransaction();
 	Query q =session.createQuery("from User u order by u.survey.time desc");
-	totalPage = q.list().size()/pageSize;//总页数
+	totalPage = q.list().size()%pageSize==0?q.list().size()/pageSize :q.list().size()/pageSize+1;//总页数
 	if (totalPage<1) {
 		totalPage=1;
 	}
@@ -111,7 +111,7 @@ public String detail() throws Exception{
 	return "success";
 }
 /**
- * 将所有信息导出到一张表中，包括用户信息。
+ * 将所有信息导出到一张表中，包括用户信息。(但是不是一行一个用户)
  * 
  * @return
  */
@@ -208,7 +208,10 @@ public String excelUserInfo(){
 		detail.setTitle(answer.getProblem().title);
 		detail.setRemark(answer.getRemark());
 		detail.setPid(answer.getProblem().pid);
-		detail.setAnswer(answer.getOptions().getValue());
+		if (answer.getOptions()!=null) {
+			detail.setAnswer(answer.getOptions().getValue());
+		}
+		
 		details.add(detail);
 	}
 	List<String> columns = new ArrayList<>();
@@ -220,13 +223,7 @@ public String excelUserInfo(){
 	return "success";
 
 }
-/**
- * 
- * @return
- */
-public String excelAll(){
-	return null;
-}
+
 public String getUsername() {
 	return username;
 }

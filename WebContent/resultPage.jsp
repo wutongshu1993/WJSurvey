@@ -12,13 +12,14 @@
 <link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap theme -->
 <link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+<%--  <link href="${pageContext.request.contextPath}/css/result.css" rel="stylesheet" /> --%>
 
- <link href="${pageContext.request.contextPath}/css/survey.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
 	<div class="container theme-showcase" >
 	<div align="right">
-	<a href="excelDetail" >导出所有问卷</a>
+	<!-- <a href="excelDetail" >导出所有问卷</a> -->
+	<button class="btn btn-default" id="exportButton">导出所有问卷</button>
 	</div>
 		<table class=" table table-bordered table-striped ">
 			<thead>
@@ -36,7 +37,6 @@
 			<s:iterator value="users" var="user" status="i">
 				<tbody>
 					<tr class="success">
-
 						<td><s:property value="#i.count" /></td>
 						<td><s:property value="#user.name" /></td>
 						<td><s:property value="#user.tel" /></td>
@@ -85,7 +85,26 @@ function go(c){//该函数指定要跳转的页面
 	document.mf.currentPage.value=c;
 	document.mf.submit();//提交表单
 }
- 
+$(document).on("click", "#exportButton",function(){
+	//alert(22);
+	window.location="/WJSurvey/excelDetail"
+	$.ajax({
+		url:'excelDetail',
+		type: "POST",
+		data: {
+			
+		},
+		
+		success: function(data){
+			//alert(data.exportPath);
+			// window.location=data.exportPath;
+		//	window.open(data.exportPath);
+			//alert(20);
+			
+		}
+		
+	});
+})
 </script>
 </body>
 </html>

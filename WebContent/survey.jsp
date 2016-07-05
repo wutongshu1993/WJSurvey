@@ -18,29 +18,24 @@
 </head>
 <body>
 
-
-<div class="container theme-showcase" role="main">
+<div class="top"></div>
+<div class="container theme-showcase main" role="main">
 <div align="right">
 <a href="${pageContext.request.contextPath}/login.jsp" >问卷统计</a>
 </div>
-<div class="jumbotron">
-<h2 align="center">调查问卷</h2>
-<br>
+<div class="">
+<h2 align="center" class="header">调查问卷</h2>
 
 </div>
-<p>尊敬的先生/女士：
-您好！感谢您参加我们的调查！此次调查主要通过问卷方式了解
-地震后重灾区灾民受灾状况以及获得医学救援的反应性和可及
-性，为国家“防灾、减灾”建设提供重要依据。所调查的内容仅用于
-相关的分析，我们将按照国家《统计法》的要求，对您回答的问题加
-以保密。希望您能够如实、客观、完整地回答以下的所有问题，再次
+<p class="info">尊敬的先生/女士：
+您好！感谢您参加我们的调查！此次调查主要通过问卷方式了解地震后重灾区灾民受灾状况以及获得医学救援的反应性和可及性，为国家“防灾、减灾”建设提供重要依据。所调查的内容仅用于相关的分析，我们将按照国家《统计法》的要求，对您回答的问题加以保密。希望您能够如实、客观、完整地回答以下的所有问题，再次
 感谢您的合作！
 </p>
 
 <form action="" class="form-inline">
-<div class="row">
+<div class="row title">
 
-<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group ">
 姓名：
 <input type="text" class="form-control" name="name" id="name" style="width:60%"/>
 </div>
@@ -52,16 +47,16 @@
 </div>
 </div>
 <br>
-<div class="row" align="left">
+<div class="row title" align="left">
 
-<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group ">
 家庭住址：
 <input type="text" class="form-control" name="quX" id="quX" style="width:60%"/>
-区县
+区/县
 </div>
 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
 <input type="text" class="form-control" name="xiangJ"  id="xiangJ"style="width:60%"/>
-乡(街道)
+乡/街道
 </div>
 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
 <input type="text" class="form-control" name="cun" id="cun"  style="width:60%"/>
@@ -69,7 +64,7 @@
 </div>
 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
 <input type="text" class="form-control" name="zuD" id="zuD" style="width:60%"/>
-组（队）
+组/队
 </div>
 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 form-group">
 <input type="text" class="form-control" name="hao" id="hao" style="width:60%"/>
@@ -98,7 +93,9 @@
 <br>
 <s:property value="#bulk.pid"/>
 <s:iterator value="#bulk.items" var="item">
-<s:property value="#item.problem.title"/>
+<font class="title">
+<s:property value="#item.problem.title" />
+</font>
 <s:if test="#item.problem.img!=null">
 <br>
 <img alt="" src="<s:property value="#item.problem.img"/>">
@@ -116,12 +113,20 @@ optionId=<s:property value="#option.id"/> flag="0">
 <input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="form-control remarkForR weijiuzhen" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
 </s:if>
+<s:elseif test="#item.problem.id>=36 && #item.problem.id<=42"><!--14题选否，直接跳到第17题  -->
+<input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption form-control fou" 
+optionId=<s:property value="#option.id"/> flag="0">
+<s:property value="#option.value"/></input>
+<s:if test="#option.edit==1">
+<input type="text"  value=""  optionId=<s:property value="#option.id"/>  class="form-control remarkForR fou" id=<s:property value="#option.id"/> disabled="disabled"></input>
+</s:if>
+</s:elseif>
 <s:else>
 <input type="radio" name=<s:property value="#option.problem.id"/> value="<s:property value="#option.value"/>" class="radioOption form-control" 
 optionId=<s:property value="#option.id"/> flag="0">
 <s:property value="#option.value"/></input>
 <s:if test="#option.edit==1">
-<input type="text"  value="" name=<s:property value="#option.problem.id"/> optionId=<s:property value="#option.id"/>  class="form-control remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
+<input type="text"  value=""  optionId=<s:property value="#option.id"/>  class="form-control remarkForR" id=<s:property value="#option.id"/> disabled="disabled"></input>
 </s:if>
 </s:else>
 
@@ -204,6 +209,9 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
 
 </form>
 <button type="button" class="btn btn-lg btn-primary" id="surveySubmit">提交问卷</button>
+
+<hr>
+<footer>版权所有 &copy;中国第二军医大大学</footer>
 </div>
 
 <%-- <s:debug></s:debug> --%>
@@ -361,10 +369,23 @@ var checked = $(this).is(':checked');
 	//alert(checked);
 	
 	//alert(opId);
-	 if(opId==71){//"否"
+	 if(opId==71){//"否",直接跳到第17题
 		 if(checked==true){
+			 var w = document.getElementsByClassName("fou"); 
+			 for(var i=0;i<w.length;i++){
+					w[i].disabled = true;
+					w[i].checked = false;
+					w[i].value = "";
+				}
+				var x = document.getElementsByClassName("fou remarkForE");
+				for(var i=0;i<x.length;i++){
+					x[i].disabled = true;
+					// x[i].checked = false;
+					x[i].value = ""; 
+				}
+				 }
 		//document.getElementById(73).value="";
-		 var x = document.getElementsByName("36");
+		/*  var x = document.getElementsByName("36");
 		 for(var i=0;i<x.length;i++){
 			 x[i].disabled = true;
 			 x[i].checked = false;
@@ -402,13 +423,23 @@ var checked = $(this).is(':checked');
 		 for(var i=0;i<x.length;i++){
 			 x[i].disabled = true;
 			 x[i].checked = false;
-		 }
-		 }
+		 } */
+		
 		 
 	} 
 	 if(opId==70){
 		 if(checked==true){
-			 var x = document.getElementsByName("36");
+			 var w = document.getElementsByClassName("fou radioOption");
+				for(var i=0;i<w.length;i++){
+					w[i].disabled = false;
+				}
+				/* //单选题输入框不生效，且清空 */
+				 var v = document.getElementsByClassName("fou remarkForR");
+					for(var i=0;i<v.length;i++){
+						v[i].disabled = true;
+						v[i].value = "";
+					} 
+			 /* var x = document.getElementsByName("36");
 			 for(var i=0;i<x.length;i++){
 				 x[i].disabled = false;
 			 }
@@ -435,7 +466,7 @@ var checked = $(this).is(':checked');
 			 var x = document.getElementsByName("42");
 			 for(var i=0;i<x.length;i++){
 				 x[i].disabled = false;
-			 }
+			 } */
 			 }
 	 }
 	 if(opId==181){//"未就诊，直接跳到30题"
@@ -531,7 +562,17 @@ $(document).on("click","#surveySubmit", function(){
 	var zuD= $("#zuD").val();	
 	var hao= $("#hao").val();	
 	//alert(name+hTel+tel+quX+xiangJ+cun+zuD+hao);
-	
+	var reg = /^[0-9]*$/;
+	if(!reg.test(hTel)){
+		alert("请输入数字");
+		$("#homeTel").focus();
+		return false;
+	}
+	if(!reg.test(tel)){
+		alert("请输入数字");
+		$("#tel").focus();
+		return false;
+	}
 	var params = {
 				"name":name,
 				"hTel":hTel,
@@ -558,6 +599,7 @@ $(document).on("click","#surveySubmit", function(){
 			alert("提交成功，感谢您的配合");
 			window.location.reload();
 		}
+		
 		/* function checkNumberp(){
 			console.log($(this));
 			console.log($(this.val()));

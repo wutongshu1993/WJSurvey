@@ -9,9 +9,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>问卷详情</title>
 <!-- Bootstrap core CSS -->
-<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Bootstrap theme -->
-<link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container theme-showcase" role="main">
@@ -49,8 +49,8 @@
 	<!-- Bootstrap core JavaScript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="./jquery/jquery.min.js"></script>
-	<script src="./bootstrap/3.3.5/bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/jquery/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>
