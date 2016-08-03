@@ -36,11 +36,11 @@
 		<action name="not_login">
 			<result> /not_login.jsp </result>
 		</action>
-		<action name="result" class="action.ResultAction" method="result">
+		<!-- <action name="result" class="action.ResultAction" method="result">
 			<result name="success">/result.jsp</result>
 			<result name="not_login">/login.jsp</result>
 			<interceptor-ref name="loginInterceptor"></interceptor-ref>
-		</action>
+		</action> -->
 		<!-- 含有分页 -->
 		<action name="result_list" class="action.ResultAction" method="result_list">
 			<result name="success">/resultPage.jsp</result>
@@ -54,6 +54,7 @@
 			 <interceptor-ref name="defaultStack" /> 
 			<interceptor-ref name="loginInterceptor"></interceptor-ref> 
 		</action>
+		<!--导出单个用户信息到表格  -->
 		<action name="excel" class="action.ResultAction"
 			method="excelUserInfo">
 			<result name="success">/detail.jsp</result>
@@ -61,23 +62,24 @@
 			 <interceptor-ref name="defaultStack" /> 
 			<interceptor-ref name="loginInterceptor"></interceptor-ref>  -->
 		</action>
-		<!--导出所有问卷  -->
+		
 		<!-- <action name="excelDetail" class="action.ResultAction" method="excelDetail">
 		<result name="success">/resultPage.jsp</result>
 		</action> -->
-		<action name="excelDetail" class="test.TestAction" method="excelAll2">
+		<!--导出所有问卷  -->
+		<action name="excelDetail" class="test.TestAction" method="excelAll3">
 		<result name="success" type="json">
 				<param name="includeProperties">*</param>    
 			</result>	
 		</action>
 		
-		<action name="excelTest" class="test.TestAction"
+		<!-- <action name="excelTest" class="test.TestAction"
 			method="excel">
-			<!-- <result name="success">/detail.jsp</result> -->
+			<result name="success">/detail.jsp</result>
 			<result name="success" type="json">
 				<param name="includeProperties">*</param>    
 			</result>	
-		</action>
+		</action> -->
 		
 		
 	</package>

@@ -1,6 +1,7 @@
 package test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -25,6 +26,10 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import model.Answer;
 import model.Detail;
@@ -205,7 +210,7 @@ public String excelAll(){
  */
 public String excelAll2(){
 	Session session = model.Util.sessionFactory.openSession();
-	String hql = "from Problem";
+	String hql = "from Problem order by id";
 	Query query = session.createQuery(hql);
 	List<Problem> problems = query.list();
 	int len = problems.size();//获取一共有多少个问题
@@ -243,8 +248,82 @@ public String excelAll2(){
 	
 	return ActionSupport.SUCCESS;
 }
+/**
+ * 导出所有问卷，多选题每个选项都占单独的一格
+ * @return
+ */
+public String excelAll3(){
+	Session session = model.Util.sessionFactory.openSession();
+	String hql = "from Problem order by pid, id";
+	Query query = session.createQuery(hql);
+	List<Problem> problems = query.list();
+	int len = problems.size();//获取一共有多少个问题
+	List<List<Answer>> results = new ArrayList<>();//所有用户的答案
+	List<User> users = session.createCriteria(User.class).list();//所有用户
+	List<Survey> surveys = new ArrayList<>();//所有用户的问卷信息
+	for(User user : users){
+		List<Answer> answers = new ArrayList<>();//一个用户对应的所有答案
+		answers = session.createCriteria(Answer.class).add(Restrictions.eq("survey.id", user.survey.getId()))
+				.addOrder(Order.asc("problem.id"))
+				.addOrder(Order.asc("options.id")).list();
+//		answers = session.createQuery("from Answer a where a.survey.id="+user.survey.getId()+"order by a.problem.id").list();
+		results.add(answers);
+		
+		Survey survey = (Survey)session.createCriteria(Survey.class).add(Restrictions.eq("id", user.survey.getId())).list().get(0);
+		surveys.add(survey);
+	}
+	String fileName = "所有调查问卷结果.xls";
+	HttpServletRequest request = ServletActionContext.getRequest();
+    HttpServletResponse response =ServletActionContext.getResponse();
+	try{
+		OutputStream os = response.getOutputStream();
+		 //设置对话框
+        response.setHeader("Content-disposition", "attachment;filename="+ new String(fileName.getBytes("GB2312"),"ISO-8859-1"));
+        //设置 MIME(Excel)
+        response.setContentType("application/vnd.ms-excel");
+        //设置编码
+        response.setCharacterEncoding("UTF-8");
+        ExcelUtil.exportExcel3("sheet1", problems,  users, surveys,results, os);
+        os.flush();
+        os.close();
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
+	
+	return ActionSupport.SUCCESS;
+}
 public static void main(String[] args){
-	 new TestAction().excelAll2();
+	//assfTest();
+	answerTest();
+	//new TestAction().excelAll2();
+}
+public static void answerTest(){
+	Session session = model.Util.sessionFactory.openSession();
+	List<Answer> answers = new ArrayList<>();//一个用户对应的所有答案
+	answers = session.createCriteria(Answer.class).add(Restrictions.eq("survey.id", "1465085290229"))
+			.addOrder(Order.asc("problem.id"))
+			.addOrder(Order.asc("options.id")).list();
+}
+public static void assfTest(){
+	FileOutputStream os= null;
+	try {
+		os = new FileOutputStream("E:\\b.xlsx");
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	XSSFWorkbook wb = new XSSFWorkbook();
+	XSSFSheet sheet = wb.createSheet();
+	XSSFRow row = sheet.createRow(0);
+	XSSFCell cell = row.createCell(0);
+	cell.setCellValue("aaaa");
+	try{
+		wb.write(os);
+	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
 }
 public String getExportPath() {
 	return exportPath;
