@@ -33,11 +33,12 @@
 </p>
 
 <form action="" class="form-inline">
+
 <div class="row title">
 
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group ">
 姓名：
-<input type="text" class="form-control" name="name" id="name" style="width:60%"/>
+<input type="text" class="form-control " name="name" id="name" style="width:60%"/>
 </div>
 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
 家庭电话：<input type="text" class="form-control " name="homeTel" id="homeTel" style="width:60%"/>
@@ -71,6 +72,7 @@
 号
 </div>
 </div>
+
 <s:iterator value="bulks" var="bulk">
 <s:if test="#bulk.pid==1 ">
 <b>一.基本情况</b>
@@ -102,7 +104,8 @@
 </s:if>
 <br>
 <s:if test="#item.problem.type==1"> <!--  单选-->
-<span class="danxuan">
+<span class="xuanze" num="<s:property value="#bulk.pid"/>">
+<span class="danxuan" num="<s:property value="#bulk.pid"/>">
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
 <s:if test="#item.problem.id>=59 && #item.problem.id<=74 ">
@@ -133,11 +136,14 @@ optionId=<s:property value="#option.id"/> flag="0">
 &nbsp&nbsp
 </s:iterator>
 </span>
+</span>
 <br>
 <%--  <s:radio list="#item.options"  listValue="value" listKey="value" value="value"></s:radio> --%> 
  </s:if> 
  
  <s:if test="#item.problem.type==2"> <!-- 多选 -->
+ <span class="xuanze" num="<s:property value="#bulk.pid"/>">
+ <span class="duoxuan" num="<s:property value="#bulk.pid"/>">
 <s:iterator value="#item.options" var="option">
 <%-- <s:hidden name="ids" value="id"/> --%>
 <s:if test="#item.problem.id>=59 && #item.problem.id<=74 ">
@@ -161,12 +167,16 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
 &nbsp&nbsp&nbsp
 </s:iterator>
 <br>
+</span>
+ </span>
  </s:if> 
- 
+
   <s:if test="#item.problem.type==3"> <!-- 填空 -->
 <%-- <s:iterator value="#item.options" var="option">
 <s:hidden name="ids" value="id"/>
 <s:property value="#option.value"/> --%>
+<span class="information" num="<s:property value="#bulk.pid"/>">
+
 <s:if test="#item.problem.id==17||#item.problem.id>=22 && #item.problem.id<=29 || #item.problem.id>=47 && #item.problem.id<=49 ||  #item.problem.id>=67 && #item.problem.id<=68 || #item.problem.id>=84 && #item.problem.id<=87">
 <input type="text"  value="" problemId=<s:property value="#item.problem.id"/> id=<s:property value="#item.problem.id"/> class="remarkForE numberRemark form-control"></input>
 </s:if>
@@ -180,12 +190,16 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
 &nbsp&nbsp
 <br>
 <%-- </s:iterator> --%>
+</span>
+
  </s:if> 
  
  <s:if test="#item.problem.type==4"> <!-- 多文本框 -->
+<span class="tiankong" num="<s:property value="#bulk.pid"/>">
 <textarea type="" value="" optionId=<s:property value="#option.id"/>  class="remarkForE form-control"></textarea>
 &nbsp&nbsp
 <br>
+</span>
  </s:if> 
 </s:iterator>
 <s:if test="#bulk.pid==20"> 
@@ -220,419 +234,7 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${pageContext.request.contextPath}/jquery/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(document).on("blur",".remarkForR", function(){
-var remark = $(this).val();
-//alert(remark);
-		var opId = $(this).attr("optionId");//获取选项的编号
-		//alert(opId);
-		//并让该选项选中
-		//$(this).prev().attr("checked",true);
-		/* alert(999);
-		document.getElementById(opId).checked=true;
-		alert(000); */
-		params = {
-				"remark":remark,
-				"optionId":opId
-		}
-		 //alert(checked); 
-		
-		 $.ajax({
-			url : 'survey_saveRemarkForR',
-			type : 'post',
-			dataType : 'json',
-			data : params,
-			traditional : true,
-			success : checkChangeCallback
-		});  
-	})
-
-$(document).on("blur",".remarkForC", function(){
-var remark = $(this).val();
-//alert(remark);
-		var opId = $(this).attr("optionId");//获取选项的编号
-		//alert(opId);
-		params = {
-				"remark":remark,
-				"optionId":opId
-		}
-		 //alert(checked); 
-		
-		 $.ajax({
-			url : 'survey_saveRemarkForC',
-			type : 'post',
-			dataType : 'json',
-			data : params,
-			traditional : true,
-			success : checkChangeCallback
-		});  
-	})
-$(document).on("blur",".remarkForE", function(){
-var remark = $(this).val();
-//alert(remark);
-		var opId = $(this).attr("problemId");//获取问题的编号
-		//alert(opId);
-		params = {
-				"remark":remark,
-				"optionId":opId
-		}
-		 //alert(checked); 
-		
-		 $.ajax({
-			url : 'survey_saveRemarkForE',
-			type : 'post',
-			dataType : 'json',
-			data : params,
-			traditional : true,
-			success : checkChangeCallback
-		});  
-	})
-$(document).on("click",".checkOption", function(){
-
-
-	//alert(checked);
-	var opId = $(this).attr("optionId");//获取选项的编号
-	//alert(opId);
-	var checked = $(this).is(':checked');
-	//document.getElementById(opId).disabled = true;
-	if(document.getElementById(opId)!=null){
-		//alert(111);
-		//alert(checked);
-		if(checked==true){
-				document.getElementById(opId).disabled = false;
-			}
-		else if(checked==false){
-			//$(this).removeAttr("checked");
-			document.getElementById(opId).disabled = true;
-			document.getElementById(opId).value="";
-			//alert(22);
-		}
-		
-	}
-	
-	params = {
-			"checked":checked,
-			"optionId":opId
-	}
-	 //alert(checked); 
-	// document.getElementById(opId).disabled = false;
-	 $.ajax({
-		url : 'survey_checkChangeForC',
-		type : 'post',
-		dataType : 'json',
-		data : params,
-		traditional : true,
-		success : checkChangeCallback
-	});   
-})
-
-
-$(document).on("click",".radioOption", function(){
-//	var checked = $(this).parent().children("input").eq(0).checked;
-
-/* var val = $('input:radio[name="rds"]:checked').val(); //获取选项值
-
-alert(val);
-var checked;
-if(val==null){
-	checked=false;
-}
-else checked=true;
-*/
-//实现选择了以后让备注框里面的内容清除
-var parent = $(this).parent(".danxuan");
-var ra = parent.children(".remarkForR");//得到的是一个数组
-if(ra.length>0){
-ra[0].disabled = true;
-ra.val(" ");
-}
-
-
-var opId = $(this).attr("optionId");//获取选项的编号
-	
- if(document.getElementById(opId)!=null){
-	//alert(111);
-	if($(this).attr("flag")==1){
-		$(this).attr("flag","0");
-		$(this).removeAttr("checked");
-		document.getElementById(opId).disabled = true;
-		document.getElementById(opId).value="";
-	}
-	else{
-		$(this).attr("flag","0");
-		$(this).attr("checked","checked");
-		document.getElementById(opId).disabled = false;
-	}
-} 
-	
-var checked = $(this).is(':checked');
-	//alert(checked);
-	
-	//alert(opId);
-	 if(opId==71){//"否",直接跳到第17题
-		 if(checked==true){
-			 var w = document.getElementsByClassName("fou"); 
-			 for(var i=0;i<w.length;i++){
-					w[i].disabled = true;
-					w[i].checked = false;
-					w[i].value = "";
-				}
-				var x = document.getElementsByClassName("fou remarkForE");
-				for(var i=0;i<x.length;i++){
-					x[i].disabled = true;
-					// x[i].checked = false;
-					x[i].value = ""; 
-				}
-				 }
-		//document.getElementById(73).value="";
-		/*  var x = document.getElementsByName("36");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-			 x[i].value = "";
-			
-		 }
-		 var x = document.getElementsByName("37");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-			 x[i].value = "";
-		 }
-		 var x = document.getElementsByName("38");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-		 }
-		 var x = document.getElementsByName("39");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-		 }
-		 var x = document.getElementsByName("40");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-			 x[i].value = "";
-		 }
-		 var x = document.getElementsByName("41");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-		 }
-		 var x = document.getElementsByName("42");
-		 for(var i=0;i<x.length;i++){
-			 x[i].disabled = true;
-			 x[i].checked = false;
-		 } */
-		
-		 
-	} 
-	 if(opId==70){
-		 if(checked==true){
-			 var w = document.getElementsByClassName("fou radioOption");
-				for(var i=0;i<w.length;i++){
-					w[i].disabled = false;
-				}
-				/* //单选题输入框不生效，且清空 */
-				 var v = document.getElementsByClassName("fou remarkForR");
-					for(var i=0;i<v.length;i++){
-						v[i].disabled = true;
-						v[i].value = "";
-					} 
-			 /* var x = document.getElementsByName("36");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 }
-			 var x = document.getElementsByName("37");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 }
-			 var x = document.getElementsByName("38");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 }
-			 var x = document.getElementsByName("39");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 }
-			 var x = document.getElementsByName("40");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 }
-			 var x = document.getElementsByName("41");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 }
-			 var x = document.getElementsByName("42");
-			 for(var i=0;i<x.length;i++){
-				 x[i].disabled = false;
-			 } */
-			 }
-	 }
-	 if(opId==181){//"未就诊，直接跳到30题"
-		 if(checked==true){
-		//document.getElementById(73).value="";
-		var w = document.getElementsByClassName("weijiuzhen");
-		for(var i=0;i<w.length;i++){
-			w[i].disabled = true;
-			w[i].checked = false;
-			w[i].value = "";
-		}
-		var x = document.getElementsByClassName("weijiuzhen remarkForE");
-		for(var i=0;i<x.length;i++){
-			x[i].disabled = true;
-			// x[i].checked = false;
-			x[i].value = ""; 
-		}
-		 }
-	 }
-	
-	 if(opId>=176 && opId<=180){
-		 var w = document.getElementsByClassName("weijiuzhen radioOption");
-				for(var i=0;i<w.length;i++){
-					w[i].disabled = false;
-				}
-				/* //单选题输入框不生效，且清空 */
-				 var v = document.getElementsByClassName("weijiuzhen remarkForR");
-					for(var i=0;i<v.length;i++){
-						v[i].disabled = true;
-						v[i].value = "";
-					} 
-					//填空题生效
-					var x = document.getElementsByClassName("weijiuzhen remarkForE");
-					for(var i=0;i<x.length;i++){
-						x[i].disabled = false;
-						x[i].value = "";
-					}
-					
-					//多选题生效
-					var y = document.getElementsByClassName("weijiuzhen checkOption");
-					for(var i=0;i<y.length;i++){
-						y[i].disabled = false;
-					}
-					//多选题输入框 不生效，且清空
-					var z = document.getElementsByClassName("weijiuzhen remarkForC");
-					for(var i=0;i<z.length;i++){
-						z[i].disabled = true;
-						z[i].value = "";
-					} 
-			 }
-	
-	//alert(111);
-	//alert($(this).attr("flag"));
-	
-	 /* if(checked){
-		document.getElementById(opId).disabled = false;
-	}
-	 if(checked==false){
-		 document.getElementById(opId).disabled = true;
-	 }  */
-	//$("#"+opId).disabled=true;
-	
-	params = {
-			"checked":checked,
-			/* "newNum": Number($("#exCont").attr("newNum")),
-			"titleId":Number( $(this).parents("[titleId]").attr("titleId")), */
-			"optionId":opId
-	}
-	 //alert(checked); 
-	
-	   $.ajax({
-		url : 'survey_checkChangeForR',
-		type : 'post',
-		dataType : 'json',
-		data : params,
-		traditional : true,
-		success : checkChangeCallback
-	});   
-})
-
-
-function checkChangeCallback(data)
-		{
-			/* alert(data.status); */
-		}
-$(document).on("click","#surveySubmit", function(){
-	var name= $("#name").val();	
-	var hTel= $("#homeTel").val();	
-	var tel= $("#tel").val();	
-	var quX= $("#quX").val();	
-	var xiangJ= $("#xiangJ").val();	
-	var cun= $("#cun").val();	
-	var zuD= $("#zuD").val();	
-	var hao= $("#hao").val();	
-	//alert(name+hTel+tel+quX+xiangJ+cun+zuD+hao);
-	var reg = /^[0-9]*$/;
-	if(!reg.test(hTel)){
-		alert("请输入数字");
-		$("#homeTel").focus();
-		return false;
-	}
-	if(!reg.test(tel)){
-		alert("请输入数字");
-		$("#tel").focus();
-		return false;
-	}
-	var params = {
-				"name":name,
-				"hTel":hTel,
-				"tel":tel,
-				"quX":quX,
-				"xiangJ":xiangJ,
-				"cun":cun,
-				"zuD":zuD,
-				"hao":hao
-			}
-			$.ajax({
-				url : 'survey_submit',
-				type : 'post',
-				dataType : 'json',
-				data : params,
-				traditional : true,
-				success : submitCallback
-			});
-		})
-		function submitCallback(data)
-		{
-			/* alert("您答对了：" + data.score + "个题目" + "\n" + data.status);
-			window.location.reload(); */
-			alert("提交成功，感谢您的配合");
-			window.location.reload();
-		}
-		
-		/* function checkNumberp(){
-			console.log($(this));
-			console.log($(this.val()));
-			var num =$(this).val();
-			
-			var pid = $(this).attr("class");
-			alert(pid);
-			var num = $("#"+pid).val();
-			//var num = document.getElementById(id).val();
-			alert(num);
-			var reg = /^[0-9]*$/;
-			if(!reg.test(num)){
-				alert("请输入数字");
-				return false;
-			}
-			else return true;
-		} */
-		$(document).on("blur",".numberRemark", function(){
-			//var num =$(this).val();
-			var pid = $(this).attr("problemId");
-			//alert(pid);
-			//var num = $("#"+pid).val();
-			var num = $("[problemId="+pid+"]").val();
-			//var num = document.getElementById(id).val();
-			//alert(num);
-			var reg = /^[0-9]*$/;
-			if(!reg.test(num)){
-				alert("请输入数字");
-				$(this).focus();
-				return false;
-			}
-			else return true;
-		});
-</script>
+    <script src="${pageContext.request.contextPath}/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/js/survey.js"></script>
 </body>
 </html>
