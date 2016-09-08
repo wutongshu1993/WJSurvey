@@ -20,7 +20,8 @@
 
 <div class="top"></div>
 <div class="container theme-showcase main" role="main">
-<div align="right">
+<%-- <a href="${pageContext.request.contextPath}/aboutUs.html" >关于我们</a> --%>
+<div style="float:right">
 <a href="${pageContext.request.contextPath}/login.jsp" >问卷统计</a>
 </div>
 <div class="">
@@ -196,7 +197,7 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
  
  <s:if test="#item.problem.type==4"> <!-- 多文本框 -->
 <span class="tiankong" num="<s:property value="#bulk.pid"/>">
-<textarea type="" value="" optionId=<s:property value="#option.id"/>  class="remarkForE form-control"></textarea>
+<textarea  problemId=<s:property value="#item.problem.id"/>  class="remarkForE form-control"></textarea>
 &nbsp&nbsp
 <br>
 </span>
@@ -225,7 +226,7 @@ optionId=<s:property value="#option.id"/> ><%-- edit=<s:property value="#option.
 <button type="button" class="btn btn-lg btn-primary" id="surveySubmit">提交问卷</button>
 
 <hr>
-<footer>版权所有 &copy;中国第二军医大大学</footer>
+<footer>版权所有 &copy;中国第二军医大大学 <a href="${pageContext.request.contextPath}/aboutUs.html" >关于我们</a></footer>
 </div>
 
 <%-- <s:debug></s:debug> --%>

@@ -25,6 +25,7 @@
 <script type="text/javascript" src="./js/carousel.js"></script>
 </head>
 <body>
+<p style="height: 200px;"></p>
 	<div class="container theme-showcase" role="main">
 		<div class="jumbotron">
 			<p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp尊敬的先生/女士：
@@ -32,63 +33,13 @@
 				性，为国家“防灾、减灾”建设提供重要依据。所调查的内容仅用于 相关的分析，我们将按照国家《统计法》的要求，对您回答的问题加
 				以保密。希望您能够如实、客观、完整地回答以下的所有问题，再次 感谢您的合作！</p>
 			<br> <br>
-		</div>
-		<div class="J_Poster poster-main "
-			data-setting='{
-                                                                                    "width":1000,
-                                                                                    "height":270,
-                                                                                    "posterWidth":640,
-                                                                                    "posterHeight":270,
-                                                                                    "scale":0.8,
-                                                                                    "autoPlay":true,
-                                                                                    "delay":2000,
-                                                                                    "speed":300
-																					}'>
-			<div class="poster-btn poster-prev-btn"></div>
-			<ul class="poster-list">
-				<li class="poster-item"><a href="#"><img src="./img/1.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/2.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/3.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/4.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/5.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/6.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/7.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/8.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/9.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/10.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/11.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/12.jpg"
-						width="100%" height="100%"></a></li>
-				<!--  <li class="poster-item"><a href="#"><img src="./img/13.jpg" width="100%" height="100%"></a></li> -->
-				<li class="poster-item"><a href="#"><img src="./img/14.jpg"
-						width="100%" height="100%"></a></li>
-				<li class="poster-item"><a href="#"><img src="./img/16.jpg"
-						width="100%" height="100%"></a></li>
-			</ul>
-			<div class="poster-btn poster-next-btn"></div>
-		</div>
-		<p style="height: 200px;"></p>
-		<center>
+			<center>
 			<a href="survey" class="btn btn-lg btn-primary .btn-block">参与问卷</a>
 		</center>
+		</div>
+		
+		
+		
 	</div>
 </body>
 </html>
-<script>
-	$(function() {
-		Carousel.init($(".J_Poster"));
-	});
-
-	
-</script>

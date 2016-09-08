@@ -188,56 +188,56 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 		cell.setCellValue("组/队");
 		cell = row0.createCell(9);
 		cell.setCellValue("号");
-		for(int i=0;i<32*2;i=i+2){//1-18题（第1~32小题）
+		for(int i=0;i<30*2;i=i+2){//1-18题（第1~32小题）
 			int pid = problems.get(i/2).getPid();
 			cell = row0.createCell(i+10);
 			cell.setCellValue("第"+pid+"题答案");
 			cell = row0.createCell(i+1+10);
 			cell.setCellValue("第"+pid+"题备注");
 		}
-		//19题多选题 5个选项（ 74~83）
-		for(int i=74;i<84;i=i+2){
+		//19题多选题 5个选项（ 74~83）(70-79)
+		for(int i=70;i<80;i=i+2){
 			cell = row0.createCell(i);
-			cell.setCellValue("第19题-选项"+((i-73+1)/2));
+			cell.setCellValue("第19题-选项"+((i-69+1)/2));
 			cell = row0.createCell(i+1);
-			cell.setCellValue("第19题-备注"+((i-73+1)/2));
+			cell.setCellValue("第19题-备注"+((i-69+1)/2));
 		}
 		
 		//20-22题，20是第33小题（从0开始计数）（20-22共有7个题） 最后一题的备注为第84~97个单元格
-		for(int i=33*2;i<40*2;i=i+2){
+		for(int i=31*2;i<38*2;i=i+2){
 			int pid = problems.get(i/2).getPid();
-			cell = row0.createCell(i-33*2+84);
+			cell = row0.createCell(i-31*2+80);
 			cell.setCellValue("第"+pid+"题答案");
-			cell = row0.createCell(i-33*2+84+1);
+			cell = row0.createCell(i-31*2+80+1);
 			cell.setCellValue("第"+pid+"题备注");
 		}
 		//23题多选题，19个选项 （第40小题）98~135
-		for(int i=98;i<136;i=i+2){
+		for(int i=94;i<132;i=i+2){
 			cell = row0.createCell(i);
-			cell.setCellValue("第"+23+"题-选项"+((i-97+1)/2));
+			cell.setCellValue("第"+23+"题-选项"+((i-93+1)/2));
 			cell = row0.createCell(i+1);
-			cell.setCellValue("第"+23+"题-备注"+((i-97+1)/2));
+			cell.setCellValue("第"+23+"题-备注"+((i-93+1)/2));
 		}
 		
 		
 		//24题多选题 有5个选项，都有备注(从136~145个单元格，第41小题)
-		for(int i=136;i<146;i=i+2){
+		for(int i=132;i<142;i=i+2){
 			cell = row0.createCell(i);
-			cell.setCellValue("第"+24+"题-选项"+((i-135+1)/2));
+			cell.setCellValue("第"+24+"题-选项"+((i-131+1)/2));
 			cell = row0.createCell(i+1);
-			cell.setCellValue("第"+24+"题-备注"+((i-135+1)/2));
+			cell.setCellValue("第"+24+"题-备注"+((i-131+1)/2));
 		}
 		
 		//25题 多选题 7个选项（从146~159，第42小题）
-		for(int i=146;i<160;i=i+2){
+		for(int i=142;i<156;i=i+2){
 			cell = row0.createCell(i);
-			cell.setCellValue("第"+25+"题-选项"+((i-145+1)/2));
+			cell.setCellValue("第"+25+"题-选项"+((i-141+1)/2));
 			cell = row0.createCell(i+1);
-			cell.setCellValue("第"+25+"题-备注"+((i-145+1)/2));
+			cell.setCellValue("第"+25+"题-备注"+((i-141+1)/2));
 		}
 		
 		//26 单选题 2个小题（第43~44小题）
-		for(int i=160;i<164;i=i+2){
+		for(int i=156;i<160;i=i+2){
 			cell = row0.createCell(i);
 			cell.setCellValue("第26题答案");
 			cell = row0.createCell(i+1);
@@ -245,43 +245,43 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 		}
 		
 		//27题前3个单选小题（45~47 从164个单元格开始， 169结束 ）
-		for(int i=45*2;i<48*2;i=i+2){
+		for(int i=43*2;i<46*2;i=i+2){
 			int pid = problems.get(i/2).getPid();
-			cell = row0.createCell(i-45*2+164);
+			cell = row0.createCell(i-43*2+160);
 			cell.setCellValue("第"+pid+"题答案");
-			cell = row0.createCell(i-45*2+164+1);
+			cell = row0.createCell(i-43*2+160+1);
 			cell.setCellValue("第"+pid+"题备注");
 		}
 		//27题第4个小题是多选  8个选项（第48小题，从170~185单元格开始）
-		for(int i=170;i<186;i=i+2){
+		for(int i=166;i<182;i=i+2){
 			cell = row0.createCell(i);
-			cell.setCellValue("第"+27+"题-选项"+((i-169+1)/2));
+			cell.setCellValue("第"+27+"题-选项"+((i-165+1)/2));
 			cell = row0.createCell(i+1);
-			cell.setCellValue("第"+27+"题-备注"+((i-169+1)/2));
+			cell.setCellValue("第"+27+"题-备注"+((i-165+1)/2));
 		}
 		
 		//////////
 		//第27题第5小问开始，至44结束（第49小题到79小题,从第186个单元格开始 ，247结束）
-		for(int i=49*2;i<80*2; i=i+2){
+		for(int i=47*2;i<78*2; i=i+2){
 			int pid = problems.get(i/2).getPid();
-			cell = row0.createCell(i-49*2+186);
+			cell = row0.createCell(i-47*2+182);
 			cell.setCellValue("第"+pid+"题答案");
-			cell = row0.createCell(i-49*2+186+1);
+			cell = row0.createCell(i-47*2+182+1);
 			cell.setCellValue("第"+pid+"题备注");
 		}
 		//第45题 5个选项，都没有备注
-		for(int i=248;i<258;i=i+2){
+		for(int i=244;i<254;i=i+2){
 			cell = row0.createCell(i);
-			cell.setCellValue("第"+45+"题-选项"+((i-247+1)/2));
+			cell.setCellValue("第"+45+"题-选项"+((i-243+1)/2));
 			cell = row0.createCell(i+1);
-			cell.setCellValue("第"+45+"题-备注"+((i-247+1)/2));
+			cell.setCellValue("第"+45+"题-备注"+((i-243+1)/2));
 		}
 		//第46~85题  81小题到120小题 从258~337开始
-		for(int i=81*2;i<121*2; i=i+2){
+		for(int i=79*2;i<119*2; i=i+2){
 			int pid = problems.get(i/2).getPid();
-			cell = row0.createCell(i-81*2+258);
+			cell = row0.createCell(i-79*2+254);
 			cell.setCellValue("第"+pid+"题答案");
-			cell = row0.createCell(i-81*2+258+1);
+			cell = row0.createCell(i-79*2+254+1);
 			cell.setCellValue("第"+pid+"题备注");
 		}
 		//下面开始写入被调查者的问卷信息
@@ -313,15 +313,35 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 			}
 			
 			//对试题答案的导入(需要考虑如果是复选框的话，需要依次把每个选项导入到对应的列)
-			for(int j=0;j<338;){//因为一共有337列T T
+			for(int j=0;j<334;){//因为一共有337列T T
 				if(j<results.get(i).size()*2){
 				Answer a = results.get(i).get(j/2);
 				Problem p = a.getProblem();
 				int id = p.getId();
 				int pid = p.getPid();
-				//1-18题答案的写入
-				if(id>=13 && id<45){
+				//1-18题答案的写入 (31、33题没有)
+				if(id>=13 && id<31){
 					cell = row.createCell((id-13)*2+10);
+					if(results.get(i).get(j/2).getOptions()!=null){
+						String value = results.get(i).get(j/2).getOptions().getValue();
+						cell.setCellValue(value);
+						}
+					cell = row.createCell((id-13)*2+11);
+					cell.setCellValue(results.get(i).get(j/2).getRemark());
+					j=j+2;
+				}
+				else if(id==32){
+					cell = row.createCell((id-13-1)*2+10);
+					if(results.get(i).get(j/2).getOptions()!=null){
+						String value = results.get(i).get(j/2).getOptions().getValue();
+						cell.setCellValue(value);
+						}
+					cell = row.createCell((id-13-1)*2+11);
+					cell.setCellValue(results.get(i).get(j/2).getRemark());
+					j=j+2;
+				}
+				else if(id>33 && id<45){
+					cell = row.createCell((id-13-2)*2+10);
 					if(results.get(i).get(j/2).getOptions()!=null){
 						String value = results.get(i).get(j/2).getOptions().getValue();
 						cell.setCellValue(value);
@@ -334,7 +354,8 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				else if(id==45){
 					if (a.getOptions()!=null) {
 						String ans = a.getOptions().getValue();
-						cell = row.createCell(a.getOptions().getId()-41+(a.getOptions().getId()-115));
+						//第二个参数是第几个选项
+						cell = row.createCell(a.getOptions().getId()-45+(a.getOptions().getId()-115));
 						cell.setCellValue(ans);
 						
 					}
@@ -343,12 +364,12 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				}
 				//20~22
 				else if(id>=46&&id<53){
-					cell = row.createCell((id-46)*2+84);
+					cell = row.createCell((id-46)*2+80);
 					if(results.get(i).get(j/2).getOptions()!=null){
 						String value = results.get(i).get(j/2).getOptions().getValue();
 						cell.setCellValue(value);
 						}
-					cell = row.createCell((id-46)*2+84+1);
+					cell = row.createCell((id-46)*2+80+1);
 					cell.setCellValue(results.get(i).get(j/2).getRemark());
 					j=j+2;
 				}
@@ -356,9 +377,9 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				else if(id==53){
 					if (a.getOptions()!=null) {
 						String ans = a.getOptions().getValue();
-						cell = row.createCell(a.getOptions().getId()-41+(a.getOptions().getId()-139));
+						cell = row.createCell(a.getOptions().getId()-45+(a.getOptions().getId()-139));
 						cell.setCellValue(ans);
-						cell = row.createCell(a.getOptions().getId()-41+1+(a.getOptions().getId()-139));
+						cell = row.createCell(a.getOptions().getId()-45+1+(a.getOptions().getId()-139));
 						cell.setCellValue(a.getRemark());
 							
 						
@@ -369,9 +390,9 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				else if(id==54){
 					if (a.getOptions()!=null) {
 						String ans = a.getOptions().getValue();
-						cell = row.createCell(a.getOptions().getId()-22+(a.getOptions().getId()-158));
+						cell = row.createCell(a.getOptions().getId()-26+(a.getOptions().getId()-158));
 						cell.setCellValue(ans);
-						cell = row.createCell(a.getOptions().getId()-22+1+(a.getOptions().getId()-158));
+						cell = row.createCell(a.getOptions().getId()-26+1+(a.getOptions().getId()-158));
 						cell.setCellValue(a.getRemark());
 					}
 					j=j+2;
@@ -380,9 +401,9 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				else if(id==55){
 					if (a.getOptions()!=null) {
 						String ans = a.getOptions().getValue();
-						cell = row.createCell(a.getOptions().getId()-17+(a.getOptions().getId()-163));
+						cell = row.createCell(a.getOptions().getId()-17-4+(a.getOptions().getId()-163));
 						cell.setCellValue(ans);
-						cell = row.createCell(a.getOptions().getId()-17+1+(a.getOptions().getId()-163));
+						cell = row.createCell(a.getOptions().getId()-17-4+1+(a.getOptions().getId()-163));
 						cell.setCellValue(a.getRemark());
 						
 						
@@ -391,12 +412,12 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				}
 //				//26 和27的前3个 单选
 				else if(id>=56 && id<=60){
-					cell = row.createCell((id-56)*2+160);
+					cell = row.createCell((id-56)*2+156);
 					if(results.get(i).get(j/2).getOptions()!=null){
 						String value = results.get(i).get(j/2).getOptions().getValue();
 						cell.setCellValue(value);
 						}
-					cell = row.createCell((id-56)*2+160+1);
+					cell = row.createCell((id-56)*2+156+1);
 					cell.setCellValue(results.get(i).get(j/2).getRemark());
 					j=j+2;
 				}
@@ -404,9 +425,9 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				else if(id==61){
 					if (a.getOptions()!=null) {
 						String ans = a.getOptions().getValue();
-						cell = row.createCell(a.getOptions().getId()-25+(a.getOptions().getId()-195));
+						cell = row.createCell(a.getOptions().getId()-25-4+(a.getOptions().getId()-195));
 						cell.setCellValue(ans);
-						cell = row.createCell(a.getOptions().getId()-25+1+(a.getOptions().getId()-195));
+						cell = row.createCell(a.getOptions().getId()-25-4+1+(a.getOptions().getId()-195));
 						cell.setCellValue(a.getRemark());
 						
 					}
@@ -414,12 +435,12 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				}
 //				//27第5问至44 单选
 				else if(id>=62 && id<=92){
-					cell = row.createCell((id-62)*2+186);
+					cell = row.createCell((id-62)*2+186-4);
 					if(results.get(i).get(j/2).getOptions()!=null){
 						String value = results.get(i).get(j/2).getOptions().getValue();
 						cell.setCellValue(value);
 						}
-					cell = row.createCell((id-62)*2+186+1);
+					cell = row.createCell((id-62)*2+186-4+1);
 					cell.setCellValue(results.get(i).get(j/2).getRemark());
 					j=j+2;
 				}
@@ -427,19 +448,19 @@ public static void exportExcel3 (String title,List<Problem> problems,List<User> 
 				else if(id == 93){
 					if (a.getOptions()!=null) {
 						String ans = a.getOptions().getValue();
-						cell = row.createCell(a.getOptions().getId()-47+(a.getOptions().getId()-295));
+						cell = row.createCell(a.getOptions().getId()-47-4+(a.getOptions().getId()-295));
 						cell.setCellValue(ans);
 					}
 					j=j+2;
 				}
 //				//46~88题 单选
 				else if(id >=94 && id<=133){
-					cell = row.createCell((id-94)*2+258);
+					cell = row.createCell((id-94)*2+258-4);
 					if(results.get(i).get(j/2).getOptions()!=null){
 						String value = results.get(i).get(j/2).getOptions().getValue();
 						cell.setCellValue(value);
 						}
-					cell = row.createCell((id-94)*2+258+1);
+					cell = row.createCell((id-94)*2+258-4+1);
 					cell.setCellValue(results.get(i).get(j/2).getRemark());
 					j=j+2;
 				}
